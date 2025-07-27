@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="manifest" href="/manifest.json">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-initial-scale=1.0, viewport-fit=cover">
     <title>RIHAYI: Voice Unchained. Lives Reclaimed.</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- PWA Manifest Link -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Apple-specific meta tags for full-screen and status bar appearance -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="RIHAYI">
+    <!-- Apple Touch Icon (using a placeholder, replace with your actual app icon) -->
+    <link rel="apple-touch-icon" href="https://placehold.co/180x180/6b8e23/ffffff?text=RI">
+
+
     <style>
         body {
             font-family: 'Montserrat', sans-serif; /* Changed font to Montserrat */
@@ -20,6 +31,10 @@
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
+            /* Ensure body fills viewport for full-screen effect */
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden; /* Prevent scrolling if content overflows */
         }
         .container {
             background-color: #ffffff;
@@ -28,11 +43,13 @@
             padding: 30px;
             max-width: 600px;
             width: 100%;
-            text-align: center;
+            height: 100%; /* Make container fill available height */
             display: flex;
             flex-direction: column;
             gap: 20px;
             border: 1px solid #f7e7df; /* Subtle warmer border */
+            overflow-y: auto; /* Allow scrolling within the container if content is long */
+            box-sizing: border-box; /* Include padding in height calculation */
         }
         h1 {
             font-size: 2.5rem;
@@ -197,6 +214,7 @@
             border-radius: 0 0 24px 24px;
             margin: 20px -30px -30px -30px;
             padding: 20px 30px;
+            flex-shrink: 0; /* Prevent footer from shrinking */
         }
         .footer-nav button {
             background: none;
@@ -963,7 +981,6 @@
         // Navigation buttons (about screen)
         const homeNavButtonAbout = document.getElementById('home-nav-button-about');
         const profileNavButtonAbout = document.getElementById('profile-nav-button-about');
-        // FIX: Removed erroneous assignment to 'document'
         const feedbackNavButtonAbout = document.getElementById('feedback-nav-button-about');
         const notificationsNavButtonAbout = document.getElementById('notifications-nav-button-about'); // New
         const heatmapNavButtonAbout = document.getElementById('heatmap-nav-button-about');
@@ -1505,17 +1522,5 @@
             }
         };
     </script>
-       // This part tells your browser to start the "Magic Helper" when the page loads
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(registration => {
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      })
-      .catch(err => {
-        console.log('ServiceWorker registration failed: ', err);
-      });
-  });
-}
 </body>
 </html>

@@ -1408,82 +1408,103 @@
 
                 const result = await response.json();
 
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const jsonString = result.candidates[0].content.parts[0].text;
-                    const parsedData = JSON.parse(jsonString);
-
-                    emotionOutput.textContent = parsedData.emotion || 'N/A';
-                    issueOutput.textContent = parsedData.issue || 'N/A';
-
-                    // Display empathetic response in both languages
-                    responseOutput.innerHTML = `
-                        ${parsedData.empathetic_response?.selected_language || 'Could not generate response in selected language.'}
-                        <div class="language-output">(${parsedData.empathetic_response?.english || 'Could not generate English response.'})</div>
-                    `;
-
-                    // Display structured support suggestions in both languages
-                    if (parsedData.support_suggestions && parsedData.support_suggestions.length > 0) {
-                        parsedData.support_suggestions.forEach(suggestion => {
-                            const div = document.createElement('div');
-                            div.className = 'support-item';
-                            div.innerHTML = `
-                                <strong>${suggestion.name_selected_language || suggestion.name || 'N/A'}</strong> (${suggestion.type_selected_language || suggestion.type || 'N/A'})<br>
-                                Location: ${suggestion.location_selected_language || suggestion.location || 'N/A'}<br>
-                                Contact: ${suggestion.contact || 'N/A'}
-                                <div class="language-output">
-                                    (English: <strong>${suggestion.name || 'N/A'}</strong> (${suggestion.type || 'N/A'}), Location: ${suggestion.location || 'N/A'})
-                                </div>
-                            `;
-                            supportOutputContainer.appendChild(div);
-                        });
-                    } else {
-                        supportOutputContainer.textContent = 'No specific suggestions.';
-                    }
-
-                    outputDisplay.classList.remove('hidden');
-                    speakResponseButton.classList.remove('hidden'); // Show speak button
-
-                    // --- Save data to Firestore and check for urgent notification ---
-                    if (firestoreDb && userId) { // Using firestoreDb
-                        const wellbeingEntry = {
-                            userId: userId,
-                            timestamp: new Date().toISOString(), // ISO string for consistent date format
-                            userInput: prompt,
-                            emotion: parsedData.emotion,
-                            issue: parsedData.issue,
-                            empathetic_response: parsedData.empathetic_response,
-                            support_suggestions: parsedData.support_suggestions,
-                            language: currentLanguage
-                        };
-                        try {
-                            await addDoc(collection(firestoreDb, `artifacts/${appId}/users/${userId}/wellbeing_entries`), wellbeingEntry); // Using firestoreDb
-                            console.log("Wellbeing data saved to Firestore:", wellbeingEntry);
-
-                            // Check for worsening wellbeing to trigger notification
-                            const negativeEmotions = ["Sadness", "Anger", "Anxiety", "Distress", "Despair", "Fear", "Grief", "Frustration", "Hopelessness"];
-                            if (negativeEmotions.includes(parsedData.emotion)) {
-                                addUrgentNotification(parsedData.emotion, parsedData.issue);
-                            }
-
-                        } catch (firestoreError) {
-                            console.error("Error saving wellbeing data to Firestore:", firestoreError);
-                            showMessage("Could not save wellbeing data (prototype only).", "error");
-                        }
-                    } else {
-                        console.warn("Firestore not initialized or userId not available. Data not saved.");
-                    }
-
-
-                } else {
-                    showMessage("Could not get a valid response from the AI. Please try again.", "error");
-                    console.error("Unexpected AI response structure:", result);
+                // --- Start of enhanced AI response handling ---
+                if (result.promptFeedback && result.promptFeedback.blockReason) {
+                    // AI response was blocked by safety filters
+                    const blockReason = result.promptFeedback.blockReason;
+                    showMessage(`AI response was blocked due to safety concerns: ${blockReason}. Please try rephrasing your input.`, "error");
+                    console.warn("AI response blocked:", result.promptFeedback);
+                    return; // Stop further processing
                 }
 
+                if (!result.candidates || result.candidates.length === 0 ||
+                    !result.candidates[0].content || !result.candidates[0].content.parts ||
+                    result.candidates[0].content.parts.length === 0) {
+                    // AI response is empty or malformed in its basic structure
+                    showMessage("Could not get a valid response from the AI. The AI might be busy or the response structure was unexpected. Please try again.", "error");
+                    console.error("Unexpected AI response structure or empty candidates:", result);
+                    return; // Stop further processing
+                }
+
+                let parsedData;
+                try {
+                    const jsonString = result.candidates[0].content.parts[0].text;
+                    parsedData = JSON.parse(jsonString);
+                } catch (jsonError) {
+                    // AI response was not valid JSON
+                    showMessage("The AI returned data that could not be understood. Please try again with a different input.", "error");
+                    console.error("Error parsing AI response JSON:", jsonError, "Raw AI response:", result.candidates[0].content.parts[0].text);
+                    return; // Stop further processing
+                }
+
+                // If we reach here, parsedData is a valid JSON object
+                emotionOutput.textContent = parsedData.emotion || 'N/A';
+                issueOutput.textContent = parsedData.issue || 'N/A';
+
+                // Display empathetic response in both languages
+                responseOutput.innerHTML = `
+                    ${parsedData.empathetic_response?.selected_language || 'Could not generate response in selected language.'}
+                    <div class="language-output">(${parsedData.empathetic_response?.english || 'Could not generate English response.'})</div>
+                `;
+
+                // Display structured support suggestions in both languages
+                if (parsedData.support_suggestions && parsedData.support_suggestions.length > 0) {
+                    supportOutputContainer.innerHTML = ''; // Clear previous suggestions before adding new ones
+                    parsedData.support_suggestions.forEach(suggestion => {
+                        const div = document.createElement('div');
+                        div.className = 'support-item';
+                        div.innerHTML = `
+                            <strong>${suggestion.name_selected_language || suggestion.name || 'N/A'}</strong> (${suggestion.type_selected_language || suggestion.type || 'N/A'})<br>
+                            Location: ${suggestion.location_selected_language || suggestion.location || 'N/A'}<br>
+                            Contact: ${suggestion.contact || 'N/A'}
+                            <div class="language-output">
+                                (English: <strong>${suggestion.name || 'N/A'}</strong> (${suggestion.type || 'N/A'}), Location: ${suggestion.location || 'N/A'})
+                            </div>
+                        `;
+                        supportOutputContainer.appendChild(div);
+                    });
+                } else {
+                    supportOutputContainer.textContent = 'No specific suggestions.';
+                }
+
+                outputDisplay.classList.remove('hidden');
+                speakResponseButton.classList.remove('hidden'); // Show speak button
+
+                // --- Save data to Firestore and check for urgent notification ---
+                if (firestoreDb && userId) { // Using firestoreDb
+                    const wellbeingEntry = {
+                        userId: userId,
+                        timestamp: new Date().toISOString(), // ISO string for consistent date format
+                        userInput: prompt,
+                        emotion: parsedData.emotion,
+                        issue: parsedData.issue,
+                        empathetic_response: parsedData.empathetic_response,
+                        support_suggestions: parsedData.support_suggestions,
+                        language: currentLanguage
+                    };
+                    try {
+                        await addDoc(collection(firestoreDb, `artifacts/${appId}/users/${userId}/wellbeing_entries`), wellbeingEntry); // Using firestoreDb
+                        console.log("Wellbeing data saved to Firestore:", wellbeingEntry);
+
+                        // Check for worsening wellbeing to trigger notification
+                        const negativeEmotions = ["Sadness", "Anger", "Anxiety", "Distress", "Despair", "Fear", "Grief", "Frustration", "Hopelessness"];
+                        if (negativeEmotions.includes(parsedData.emotion)) {
+                            addUrgentNotification(parsedData.emotion, parsedData.issue);
+                        }
+
+                    } catch (firestoreError) {
+                        console.error("Error saving wellbeing data to Firestore:", firestoreError);
+                        showMessage("Could not save wellbeing data (prototype only).", "error");
+                    }
+                } else {
+                    console.warn("Firestore not initialized or userId not available. Data not saved.");
+                }
+
+
             } catch (error) {
-                showMessage(`An error occurred: ${error.message}. Please try again.`, "error");
-                console.error("Error processing input:", error);
+                // Catch any other unexpected errors during the fetch or processing
+                showMessage(`An unexpected error occurred: ${error.message}. Please try again.`, "error");
+                console.error("Overall error processing input:", error);
             } finally {
                 loadingSpinner.classList.remove('show');
             }

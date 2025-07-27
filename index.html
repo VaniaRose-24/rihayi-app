@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIHAYI: Voice Unchained. Lives Reclaimed.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif; /* Changed font to Montserrat */
+            background-color: #fdf8f5; /* Very light peach/cream for a warmer feel */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            border: 1px solid #f7e7df; /* Subtle warmer border */
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #6b8e23; /* Olive Green for a natural, human feel */
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #4a4a4a; /* Dark Gray for text */
+            margin-bottom: 20px;
+        }
+        .logo {
+            font-family: 'Montserrat', sans-serif; /* Ensure logo also uses Montserrat */
+            font-size: 3.5rem;
+            margin-bottom: 5px; /* Reduced margin to bring tagline closer */
+            color: #6b8e23; /* Matching olive green */
+            font-weight: 900;
+            letter-spacing: -2px; /* Slightly tighter for modern feel */
+            position: relative;
+            display: inline-block;
+        }
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 0px; /* Adjust based on desired underline position */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%; /* Adjust width of underline */
+            height: 4px; /* Thickness of underline */
+            background-color: #e67e22; /* Orange-brown underline */
+            border-radius: 2px;
+        }
+        .tagline {
+            font-size: 0.95rem;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .input-group label {
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #5a5a5a; /* Slightly lighter dark gray */
+        }
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #e0d8c7; /* Light beige border */
+            border-radius: 12px;
+            font-size: 1.05rem;
+            color: #4a4a4a;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: #fffaf5; /* Very light off-white background */
+        }
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #6b8e23; /* Olive green focus */
+            box-shadow: 0 0 0 4px rgba(107, 142, 35, 0.25);
+        }
+        button {
+            background-color: #e67e22; /* Warm orange-brown */
+            color: white;
+            padding: 14px 30px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.15s ease, box-shadow 0.3s ease;
+            border: none;
+            box-shadow: 0 6px 15px rgba(230, 126, 34, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        button:hover {
+            background-color: #d35400; /* Darker orange-brown on hover */
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(230, 126, 34, 0.5);
+        }
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 8px rgba(230, 126, 34, 0.3);
+        }
+        .output-section {
+            background-color: #fff5e6; /* Light orange/cream background */
+            border-radius: 16px;
+            padding: 25px;
+            text-align: left;
+            margin-top: 25px;
+            border: 1px solid #f0e0c7; /* Matching light border */
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .output-section p {
+            margin-bottom: 12px;
+            color: #4a4a4a;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        .output-section strong {
+            color: #6b8e23; /* Olive green for strong text */
+        }
+        .message-box {
+            background-color: #ffe9a7; /* Light yellow for warnings */
+            color: #a06000; /* Darker yellow text */
+            border: 1px solid #ffd76f;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 20px;
+            text-align: left;
+            display: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .message-box.show {
+            display: block;
+        }
+        .message-box.error {
+            background-color: #ffc2c2; /* Light red for errors */
+            color: #990000; /* Dark red text */
+            border-color: #ff9999;
+        }
+        .message-box.info {
+            background-color: #e6f7f9; /* Still light blue-green for info */
+            color: #2196f3;
+            border-color: #90caf9;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #e67e22; /* Orange-brown spinner */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+            display: none;
+        }
+        .spinner.show {
+            display: block;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hidden {
+            display: none;
+        }
+        .footer-nav {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #f0e0c7; /* Warmer border */
+            background-color: #fcf3e6; /* Slightly different background for nav */
+            border-radius: 0 0 24px 24px;
+            margin: 20px -30px -30px -30px;
+            padding: 20px 30px;
+        }
+        .footer-nav button {
+            background: none;
+            color: #7f8c8d; /* Soft gray */
+            padding: 10px 18px;
+            font-weight: 600;
+            box-shadow: none;
+            transition: color 0.2s ease, transform 0.1s ease;
+            border-radius: 10px;
+        }
+        .footer-nav button:hover {
+            color: #e67e22; /* Orange-brown on hover */
+            transform: translateY(-2px);
+        }
+        .footer-nav button.active {
+            color: #e67e22;
+            font-weight: 800;
+            border-bottom: 3px solid #e67e22; /* Thicker active indicator */
+            border-radius: 0;
+            transform: none;
+        }
+        .microphone-button {
+            background-color: #3498db; /* Softer blue for microphone */
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            border: none;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+            margin-left: 10px;
+        }
+        .microphone-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        .microphone-button.recording {
+            background-color: #e74c3c; /* Softer red when recording */
+            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4);
+        }
+        .microphone-button.recording:hover {
+            background-color: #c0392b;
+        }
+        .input-with-mic {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .input-with-mic textarea {
+            flex-grow: 1;
+        }
+        .support-item {
+            background-color: #fffaf5; /* Very light off-white */
+            border: 1px solid #f0e0c7;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .support-item strong {
+            color: #6b8e23; /* Olive green */
+        }
+        .language-output {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #f0e0c7;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        .intro-slide {
+            padding: 20px;
+            text-align: center;
+            background-color: #fff5e6;
+            border-radius: 16px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
+        }
+        .intro-slide h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #e67e22;
+            margin-bottom: 15px;
+        }
+        .intro-slide p {
+            color: #4a4a4a;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .intro-slide button {
+            margin-top: 15px;
+        }
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr); /* 7 days a week */
+            gap: 4px;
+            padding: 10px;
+            background-color: #f0e0c7;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        .heatmap-cell {
+            width: 35px; /* Fixed size for visual consistency */
+            height: 35px;
+            border-radius: 6px;
+            background-color: #dcdcdc; /* Default neutral */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            color: #555;
+            font-weight: 500;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        /* Example heatmap colors */
+        .mood-low { background-color: #ffc2c2; } /* Reddish for low mood */
+        .mood-medium { background-color: #ffe9a7; } /* Yellowish for medium mood */
+        .mood-high { background-color: #a7d9ed; } /* Bluish for high mood */
+        .mood-neutral { background-color: #dcdcdc; } /* Grayish for neutral */
+        .mood-positive { background-color: #b3e6b3; } /* Greenish for positive */
+
+        .heatmap-legend {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            font-size: 0.85em;
+            color: #4a4a4a;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .legend-color-box {
+            width: 15px;
+            height: 15px;
+            border-radius: 4px;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #6b8e23; /* Olive green when checked */
+        }
+        input:focus + .slider {
+            box-shadow: 0 0 1px #6b8e23;
+        }
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+        .settings-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0e0c7;
+        }
+        .settings-option:last-child {
+            border-bottom: none;
+        }
+        .star-rating {
+            display: inline-block;
+            font-size: 2rem; /* Larger stars */
+            margin-top: 15px;
+        }
+        .star-rating .fa-star {
+            color: #ccc; /* Default star color */
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .star-rating .fa-star.checked {
+            color: #f39c12; /* Gold color for checked stars */
+        }
+        .notification-item {
+            background-color: #fffaf5;
+            border: 1px solid #f0e0c7;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .notification-item strong {
+            color: #e67e22;
+        }
+        .notification-item span {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            display: block;
+            margin-top: 5px;
+        }
+        .notification-item.urgent { /* Style for urgent notifications */
+            background-color: #fff0f0; /* Very light red */
+            border-color: #ffaaaa; /* Light red border */
+            color: #cc0000; /* Darker red text */
+        }
+        .notification-item.urgent strong {
+            color: #cc0000; /* Darker red for urgent strong text */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="intro-screen">
+            <div class="logo">RIHAYI</div>
+            <p class="tagline">A Voice for Every Journey. A Hope for Every Heart.</p>
+            <div class="intro-slide" id="intro-slide-0">
+                <h3>Choose Your Language</h3>
+                <p>Select your preferred language for a personalized experience.</p>
+                <div class="input-group mt-4">
+                    <label for="initial-language-select" class="sr-only">Preferred Language</label>
+                    <select id="initial-language-select">
+                        <option value="en-US">English (US)</option>
+                        <option value="hi-IN">Hindi (India)</option>
+                        <option value="bn-IN">Bengali (India)</option>
+                        <option value="mr-IN">Marathi (India)</option>
+                        <option value="ta-IN">Tamil (India)</option>
+                        <option value="te-IN">Telugu (India)</option>
+                        <option value="kn-IN">Kannada (India)</option>
+                        <option value="ml-IN">Malayalam (India)</option>
+                        <option value="gu-IN">Gujarati (India)</option>
+                        <option value="pa-IN">Punjabi (India)</option>
+                        <option value="ur-IN">Urdu (India)</option>
+                        <option value="as-IN">Assamese (India)</option>
+                        <option value="or-IN">Oriya (India)</option>
+                        <option value="sa-IN">Sanskrit (India)</option>
+                        <option value="kok-IN">Konkani (India)</option>
+                        <option value="ne-NP">Nepali (Nepal - common in India)</option>
+                        <option value="my-MM">Burmese (Myanmar - common in India)</option>
+                        <option value="es-ES">Spanish (Spain)</option>
+                        <option value="fr-FR">French (France)</option>
+                        <option value="de-DE">German (Germany)</option>
+                    </select>
+                </div>
+                <button id="intro-next-0" class="mt-4">Continue <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="intro-slide hidden" id="intro-slide-1">
+                <h3>Welcome to RIHAYI!</h3>
+                <p>Your voice matters. We're here to listen, understand, and connect you with support, in your language.</p>
+                <button id="intro-next-1">Next <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="intro-slide hidden" id="intro-slide-2">
+                <h3>How RIHAYI Works</h3>
+                <p>Simply speak or type your feelings. Our system will understand your emotions and issues, and provide empathetic responses.</p>
+                <button id="intro-next-2">Next <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="intro-slide hidden" id="intro-slide-3">
+                <h3>Find Support</h3>
+                <p>We'll suggest relevant support networks with contact details. You can also track your emotional wellbeing over time.</p>
+                <button id="intro-get-started">Get Started <i class="fas fa-hand-point-right"></i></button>
+            </div>
+        </div>
+
+        <div id="login-screen" class="hidden">
+            <div class="logo">RIHAYI</div>
+            <p class="tagline">A Voice for Every Journey. A Hope for Every Heart.</p>
+            <h1>Welcome to RIHAYI</h1>
+            <p class="text-gray-600 mb-6">Voice Unchained. Lives Reclaimed.</p>
+            <div class="input-group mb-4">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username">
+            </div>
+            <div class="input-group mb-6">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <button id="login-button">Login</button>
+            <button id="register-button" class="mt-4" style="background-color: #6b8e23; box-shadow: 0 6px 15px rgba(107, 142, 35, 0.4);">Register</button>
+            <p class="text-sm text-gray-500 mt-4">This is a prototype. No actual login/registration is required.</p>
+        </div>
+
+        <div id="main-app-screen" class="hidden">
+            <div class="logo">RIHAYI</div>
+            <p class="tagline">A Voice for Every Journey. A Hope for Every Heart.</p>
+            <h2 class="text-gray-700">How are you feeling today?</h2>
+
+            <div class="input-group">
+                <label for="user-input">Share your thoughts or concerns:</label>
+                <div class="input-with-mic">
+                    <textarea id="user-input" rows="6" placeholder="Type here or tap the microphone to speak..."></textarea>
+                    <button id="microphone-button" class="microphone-button" title="Start Voice Input">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button id="process-button" class="mt-4">Process My Feelings</button>
+            <div class="spinner mt-4" id="loading-spinner"></div>
+            <div class="message-box" id="error-message"></div>
+
+            <div id="output-display" class="output-section mt-6 hidden">
+                <p><strong>Emotion:</strong> <span id="emotion-output"></span></p>
+                <p><strong>Issue:</strong> <span id="issue-output"></span></p>
+                <p><strong>Empathetic Response:</strong> <span id="response-output"></span></p>
+                <button id="speak-response-button" class="mt-2 text-sm">
+                    <i class="fas fa-volume-up"></i> Speak Response
+                </button>
+                <p class="mt-4"><strong>Support Network Suggestions:</strong></p>
+                <div id="support-output-container">
+                    <!-- Support suggestions will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <div class="footer-nav">
+                <button id="home-nav-button" class="active">Home</button>
+                <button id="profile-nav-button">Profile</button>
+                <button id="feedback-nav-button">Feedback</button>
+                <button id="notifications-nav-button">Notifications</button> <!-- New Notifications Nav Button -->
+                <button id="heatmap-nav-button">Wellbeing</button>
+                <button id="settings-nav-button">Settings</button>
+            </div>
+        </div>
+
+        <div id="profile-screen" class="hidden">
+            <h2 class="text-green-600">Your Profile</h2>
+            <p class="text-gray-700">Manage your personal information.</p>
+            <div class="input-group mt-4">
+                <label for="profile-name">Name:</label>
+                <input type="text" id="profile-name" placeholder="Your Name">
+            </div>
+            <div class="input-group mt-4">
+                <label for="profile-age">Age:</label>
+                <input type="number" id="profile-age" placeholder="Your Age">
+            </div>
+            <div class="input-group mt-4">
+                <label for="profile-gender">Gender:</label>
+                <select id="profile-gender">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                    <option value="prefer_not_say">Prefer not to say</option>
+                </select>
+            </div>
+            <div class="input-group mt-4">
+                <label for="profile-location">Location (City/State):</label>
+                <input type="text" id="profile-location" placeholder="e.g., Mumbai, Maharashtra">
+            </div>
+            <button id="save-profile-button" class="mt-6">Save Profile</button>
+            <p class="text-sm text-gray-500 mt-4" id="profile-last-updated">Last Updated: Never</p> <!-- New timestamp -->
+            <p class="text-gray-600 mt-4">User ID: <span id="display-user-id"></span></p>
+            <div class="footer-nav">
+                <button id="home-nav-button-profile">Home</button>
+                <button id="profile-nav-button-profile" class="active">Profile</button>
+                <button id="feedback-nav-button-profile">Feedback</button>
+                <button id="notifications-nav-button-profile">Notifications</button> <!-- New Notifications Nav Button -->
+                <button id="heatmap-nav-button-profile">Wellbeing</button>
+                <button id="settings-nav-button-profile">Settings</button>
+            </div>
+        </div>
+
+        <div id="feedback-screen" class="hidden">
+            <h2 class="text-green-600">Feedback & Reviews</h2>
+            <p class="text-gray-700">Share your thoughts with us.</p>
+            <div class="star-rating" id="star-rating">
+                <i class="fas fa-star" data-value="1"></i>
+                <i class="fas fa-star" data-value="2"></i>
+                <i class="fas fa-star" data-value="3"></i>
+                <i class="fas fa-star" data-value="4"></i>
+                <i class="fas fa-star" data-value="5"></i>
+            </div>
+            <p class="text-sm text-gray-500 mt-2">Tap a star to rate our app!</p>
+            <div class="input-group mt-4">
+                <label for="feedback-input">Your Feedback:</label>
+                <textarea id="feedback-input" rows="4" placeholder="Type your feedback here..."></textarea>
+            </div>
+            <button id="submit-feedback-button" class="mt-4">Submit Feedback</button>
+            <p class="text-sm text-gray-500 mt-4">Vocal feedback is a planned feature for the full app!</p>
+            <div class="footer-nav">
+                <button id="home-nav-button-feedback">Home</button>
+                <button id="profile-nav-button-feedback">Profile</button>
+                <button id="feedback-nav-button-feedback" class="active">Feedback</button>
+                <button id="notifications-nav-button-feedback">Notifications</button> <!-- New Notifications Nav Button -->
+                <button id="heatmap-nav-button-feedback">Wellbeing</button>
+                <button id="settings-nav-button-feedback">Settings</button>
+            </div>
+        </div>
+
+        <div id="notifications-screen" class="hidden"> <!-- New Notifications Screen -->
+            <h2 class="text-green-600">Notifications</h2>
+            <p class="text-gray-700">Important updates and reminders.</p>
+            <div id="notifications-list" class="mt-4">
+                <!-- Dynamic notifications will be added here -->
+                <div class="notification-item">
+                    <strong>Welcome to RIHAYI!</strong>
+                    <span>Your journey to wellbeing starts now.</span>
+                    <span>Just now</span>
+                </div>
+                <div class="notification-item">
+                    <strong>Daily Check-in Reminder</strong>
+                    <span>How are you feeling today? Share your thoughts.</span>
+                    <span>2 hours ago</span>
+                </div>
+                <div class="notification-item">
+                    <strong>New Support Resources Available</strong>
+                    <span>Explore updated listings for legal aid in your region.</span>
+                    <span>Yesterday</span>
+                </div>
+                <div class="notification-item">
+                    <strong>Your Feedback Matters!</strong>
+                    <span>Thank you for your recent rating.</span>
+                    <span>3 days ago</span>
+                </div>
+            </div>
+            <p class="text-sm text-gray-500 mt-4">This is a static list. In a full app, notifications would be dynamic.</p>
+            <div class="footer-nav">
+                <button id="home-nav-button-notifications">Home</button>
+                <button id="profile-nav-button-notifications">Profile</button>
+                <button id="feedback-nav-button-notifications">Feedback</button>
+                <button id="notifications-nav-button-notifications" class="active">Notifications</button>
+                <button id="heatmap-nav-button-notifications">Wellbeing</button>
+                <button id="settings-nav-button-notifications">Settings</button>
+            </div>
+        </div>
+
+
+        <div id="heatmap-screen" class="hidden">
+            <h2 class="text-green-600">Emotional Wellbeing Heatmap</h2>
+            <p class="text-gray-700">This is a visual representation of your emotional wellbeing over time.</p>
+            <div class="heatmap-grid">
+                <!-- Static cells for demonstration -->
+                <div class="heatmap-cell mood-neutral">M</div>
+                <div class="heatmap-cell mood-low">T</div>
+                <div class="heatmap-cell mood-medium">W</div>
+                <div class="heatmap-cell mood-positive">Th</div>
+                <div class="heatmap-cell mood-high">F</div>
+                <div class="heatmap-cell mood-neutral">Sa</div>
+                <div class="heatmap-cell mood-low">Su</div>
+
+                <div class="heatmap-cell mood-positive"></div>
+                <div class="heatmap-cell mood-high"></div>
+                <div class="heatmap-cell mood-neutral"></div>
+                <div class="heatmap-cell mood-low"></div>
+                <div class="heatmap-cell mood-medium"></div>
+                <div class="heatmap-cell mood-positive"></div>
+                <div class="heatmap-cell mood-neutral"></div>
+
+                <div class="heatmap-cell mood-medium"></div>
+                <div class="heatmap-cell mood-low"></div>
+                <div class="heatmap-cell mood-high"></div>
+                <div class="heatmap-cell mood-positive"></div>
+                <div class="heatmap-cell mood-neutral"></div>
+                <div class="heatmap-cell mood-low"></div>
+                <div class="heatmap-cell mood-medium"></div>
+
+                <div class="heatmap-cell mood-high"></div>
+                <div class="heatmap-cell mood-positive"></div>
+                <div class="heatmap-cell mood-neutral"></div>
+                <div class="heatmap-cell mood-low"></div>
+                <div class="heatmap-cell mood-medium"></div>
+                <div class="heatmap-cell mood-positive"></div>
+                <div class="heatmap-cell mood-high"></div>
+            </div>
+            <div class="heatmap-legend">
+                <div class="legend-item"><span class="legend-color-box mood-low"></span> Low</div>
+                <div class="legend-item"><span class="legend-color-box mood-medium"></span> Medium</div>
+                <div class="legend-item"><span class="legend-color-box mood-neutral"></span> Neutral</div>
+                <div class="legend-item"><span class="legend-color-box mood-positive"></span> Positive</div>
+                <div class="legend-item"><span class="legend-color-box mood-high"></span> High</div>
+            </div>
+            <p class="text-sm text-gray-500 mt-4">This is a static representation. In a full app, this would show your real emotional trends.</p>
+            <div class="footer-nav">
+                <button id="home-nav-button-heatmap">Home</button>
+                <button id="profile-nav-button-heatmap">Profile</button>
+                <button id="feedback-nav-button-heatmap">Feedback</button>
+                <button id="notifications-nav-button-heatmap">Notifications</button> <!-- New Notifications Nav Button -->
+                <button id="heatmap-nav-button-heatmap" class="active">Wellbeing</button>
+                <button id="settings-nav-button-heatmap">Settings</button>
+            </div>
+        </div>
+
+        <div id="settings-screen" class="hidden">
+            <h2 class="text-green-600">Settings</h2>
+            <div class="input-group mt-4">
+                <label for="language-select">Preferred Language for Input/Output:</label>
+                <select id="language-select">
+                    <option value="en-US">English (US)</option>
+                    <option value="hi-IN">Hindi (India)</option>
+                    <option value="bn-IN">Bengali (India)</option>
+                    <option value="mr-IN">Marathi (India)</option>
+                    <option value="ta-IN">Tamil (India)</option>
+                    <option value="te-IN">Telugu (India)</option>
+                    <option value="kn-IN">Kannada (India)</option>
+                    <option value="ml-IN">Malayalam (India)</option>
+                    <option value="gu-IN">Gujarati (India)</option>
+                    <option value="pa-IN">Punjabi (India)</option>
+                    <option value="ur-IN">Urdu (India)</option>
+                    <!-- Common languages for migrants in India -->
+                    <option value="as-IN">Assamese (India)</option>
+                    <option value="or-IN">Oriya (India)</option>
+                    <option value="sa-IN">Sanskrit (India)</option>
+                    <option value="kok-IN">Konkani (India)</option>
+                    <option value="ne-NP">Nepali (Nepal - common in India)</option>
+                    <option value="my-MM">Burmese (Myanmar - common in India)</option>
+                    <!-- Other general languages -->
+                    <option value="es-ES">Spanish (Spain)</option>
+                    <option value="fr-FR">French (France)</option>
+                    <option value="de-DE">German (Germany)</option>
+                </select>
+            </div>
+
+            <div class="settings-option mt-4">
+                <span>Enable Daily Check-in Notifications</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="daily-notifications-toggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="settings-option">
+                <span>Larger Text Size</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="large-text-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="settings-option">
+                <span>About RIHAYI</span>
+                <button id="about-nav-button-settings" class="text-sm" style="background-color: transparent; color: #6b8e23; box-shadow: none;">View Info</button>
+            </div>
+            <div class="settings-option">
+                <span>Help & Support</span>
+                <button id="help-nav-button-settings" class="text-sm" style="background-color: transparent; color: #6b8e23; box-shadow: none;">Get Help</button>
+            </div>
+            <div class="settings-option mt-4">
+                <span>Clear All Local Data</span>
+                <button id="clear-data-button" class="text-sm" style="background-color: #e74c3c; color: white; box-shadow: none;">Reset App</button>
+            </div>
+
+            <p class="text-sm text-gray-500 mt-4">Changes apply immediately.</p>
+            <div class="footer-nav">
+                <button id="home-nav-button-settings">Home</button>
+                <button id="profile-nav-button-settings">Profile</button>
+                <button id="feedback-nav-button-settings">Feedback</button>
+                <button id="notifications-nav-button-settings">Notifications</button> <!-- New Notifications Nav Button -->
+                <button id="heatmap-nav-button-settings">Wellbeing</button>
+                <button id="settings-nav-button-settings" class="active">Settings</button>
+            </div>
+        </div>
+
+        <div id="about-screen" class="hidden">
+            <h2 class="text-green-600">About RIHAYI</h2>
+            <p class="text-gray-700 mt-4">
+                RIHAYI: Voice Unchained. Lives Reclaimed. is a dedicated platform designed to support migrant and vulnerable communities.
+                Our mission is to provide an accessible and empathetic space where individuals can express their feelings and find relevant support.
+            </p>
+            <p class="text-gray-700 mt-4">
+                We understand that navigating new environments can be challenging. RIHAYI aims to break down communication barriers by offering
+                multilingual voice and text input/output, ensuring everyone can connect and be heard in their preferred language.
+            </p>
+            <p class="text-gray-700 mt-4">
+                Our intelligent system helps identify emotions and issues, offering compassionate responses and connecting you with
+                dummy support networks like community centers, legal aid, and mental health services. We believe in empowering
+                individuals to reclaim their lives with dignity and hope.
+            </p>
+            <p class="text-sm text-gray-500 mt-4">
+                This is a prototype version. Full functionality, including real-time support data and persistent user profiles,
+                is under development.
+            </p>
+            <div class="footer-nav">
+                <button id="home-nav-button-about">Home</button>
+                <button id="profile-nav-button-about">Profile</button>
+                <button id="feedback-nav-button-about">Feedback</button>
+                <button id="notifications-nav-button-about">Notifications</button> <!-- New Notifications Nav Button -->
+                <button id="heatmap-nav-button-about">Wellbeing</button>
+                <button id="settings-nav-button-about">Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Firebase imports (placeholders for future use, not fully implemented for this prototype)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, addDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables for Firebase (MANDATORY TO USE)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Renamed db to firestoreDb and auth to firebaseAuth to avoid potential global conflicts
+        let app, firestoreDb, firebaseAuth, userId;
+
+        // Initialize Firebase and Auth (minimal for prototype)
+        if (Object.keys(firebaseConfig).length > 0) {
+            app = initializeApp(firebaseConfig);
+            firestoreDb = getFirestore(app); // Assigned to firestoreDb
+            firebaseAuth = getAuth(app);    // Assigned to firebaseAuth
+
+            // Sign in anonymously or with custom token
+            async function authenticateUser() {
+                try {
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(firebaseAuth, initialAuthToken); // Using firebaseAuth
+                        console.log("Signed in with custom token.");
+                    } else {
+                        await signInAnonymously(firebaseAuth); // Using firebaseAuth
+                        console.log("Signed in anonymously.");
+                    }
+                    userId = firebaseAuth.currentUser?.uid || crypto.randomUUID(); // Using firebaseAuth
+                    document.getElementById('display-user-id').textContent = userId;
+                    console.log("User ID:", userId);
+                } catch (error) {
+                    console.error("Firebase authentication error:", error);
+                    // Fallback to random UUID if auth fails
+                    userId = crypto.randomUUID();
+                    document.getElementById('display-user-id').textContent = userId + " (Auth Failed)";
+                }
+            }
+            authenticateUser();
+        } else {
+            console.warn("Firebase config not found. Running without Firebase features.");
+            userId = crypto.randomUUID(); // Fallback if no Firebase config
+            document.getElementById('display-user-id').textContent = userId + " (No Firebase)";
+        }
+
+
+        // --- UI Element References ---
+        const introScreen = document.getElementById('intro-screen');
+        const introSlide0 = document.getElementById('intro-slide-0'); // New: Language selection slide
+        const introSlide1 = document.getElementById('intro-slide-1');
+        const introSlide2 = document.getElementById('intro-slide-2');
+        const introSlide3 = document.getElementById('intro-slide-3');
+        const introNext0Button = document.getElementById('intro-next-0'); // New: Button for language slide
+        const introNext1Button = document.getElementById('intro-next-1');
+        const introNext2Button = document.getElementById('intro-next-2');
+        const introGetStartedButton = document.getElementById('intro-get-started');
+        const initialLanguageSelect = document.getElementById('initial-language-select'); // New: Language select on intro
+
+
+        const loginScreen = document.getElementById('login-screen');
+        const mainAppScreen = document.getElementById('main-app-screen');
+        const profileScreen = document.getElementById('profile-screen');
+        const feedbackScreen = document.getElementById('feedback-screen');
+        const notificationsScreen = document.getElementById('notifications-screen'); // New notifications screen
+        const heatmapScreen = document.getElementById('heatmap-screen');
+        const settingsScreen = document.getElementById('settings-screen');
+        const aboutScreen = document.getElementById('about-screen'); // New about screen
+
+        const loginButton = document.getElementById('login-button');
+        const registerButton = document.getElementById('register-button');
+        const processButton = document.getElementById('process-button');
+        const userInput = document.getElementById('user-input');
+        const emotionOutput = document.getElementById('emotion-output');
+        const issueOutput = document.getElementById('issue-output');
+        const responseOutput = document.getElementById('response-output');
+        const supportOutputContainer = document.getElementById('support-output-container');
+        const outputDisplay = document.getElementById('output-display');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const errorMessage = document.getElementById('error-message');
+        const microphoneButton = document.getElementById('microphone-button');
+        const speakResponseButton = document.getElementById('speak-response-button');
+        const languageSelect = document.getElementById('language-select'); // Language select on settings page
+
+        // Profile screen elements
+        const saveProfileButton = document.getElementById('save-profile-button');
+        const profileName = document.getElementById('profile-name');
+        const profileAge = document.getElementById('profile-age');
+        const profileGender = document.getElementById('profile-gender');
+        const profileLocation = document.getElementById('profile-location');
+        const profileLastUpdated = document.getElementById('profile-last-updated'); // New timestamp element
+
+        // Feedback screen elements
+        const starRatingContainer = document.getElementById('star-rating');
+        const stars = starRatingContainer.querySelectorAll('.fa-star');
+        const submitFeedbackButton = document.getElementById('submit-feedback-button');
+        const feedbackInput = document.getElementById('feedback-input');
+
+        // Notifications screen elements
+        const notificationsList = document.getElementById('notifications-list'); // Get the notifications list container
+
+
+        // Settings screen elements
+        const dailyNotificationsToggle = document.getElementById('daily-notifications-toggle');
+        const largeTextToggle = document.getElementById('large-text-toggle');
+        const aboutNavButtonSettings = document.getElementById('about-nav-button-settings'); // Button to navigate to about screen
+        const helpNavButtonSettings = document.getElementById('help-nav-button-settings'); // New: Button to navigate to help screen
+        const clearDataButton = document.getElementById('clear-data-button'); // New: Clear data button
+
+
+        // Navigation buttons (main app screen)
+        const homeNavButton = document.getElementById('home-nav-button');
+        const profileNavButton = document.getElementById('profile-nav-button');
+        const feedbackNavButton = document.getElementById('feedback-nav-button');
+        const notificationsNavButton = document.getElementById('notifications-nav-button'); // New
+        const heatmapNavButton = document.getElementById('heatmap-nav-button');
+        const settingsNavButton = document.getElementById('settings-nav-button');
+
+        // Navigation buttons (profile screen)
+        const homeNavButtonProfile = document.getElementById('home-nav-button-profile');
+        const profileNavButtonProfile = document.getElementById('profile-nav-button-profile');
+        const feedbackNavButtonProfile = document.getElementById('feedback-nav-button-profile');
+        const notificationsNavButtonProfile = document.getElementById('notifications-nav-button-profile'); // New
+        const heatmapNavButtonProfile = document.getElementById('heatmap-nav-button-profile');
+        const settingsNavButtonProfile = document.getElementById('settings-nav-button-profile');
+
+        // Navigation buttons (feedback screen)
+        const homeNavButtonFeedback = document.getElementById('home-nav-button-feedback');
+        const profileNavButtonFeedback = document.getElementById('profile-nav-button-feedback');
+        const feedbackNavButtonFeedback = document.getElementById('feedback-nav-button-feedback');
+        const notificationsNavButtonFeedback = document.getElementById('notifications-nav-button-feedback'); // New
+        const heatmapNavButtonFeedback = document.getElementById('heatmap-nav-button-feedback');
+        const settingsNavButtonFeedback = document.getElementById('settings-nav-button-feedback');
+
+        // Navigation buttons (notifications screen)
+        const homeNavButtonNotifications = document.getElementById('home-nav-button-notifications'); // New
+        const profileNavButtonNotifications = document.getElementById('profile-nav-button-notifications'); // New
+        const feedbackNavButtonNotifications = document.getElementById('feedback-nav-button-notifications'); // New
+        const notificationsNavButtonNotifications = document.getElementById('notifications-nav-button-notifications'); // New
+        const heatmapNavButtonNotifications = document.getElementById('heatmap-nav-button-notifications'); // New
+        const settingsNavButtonNotifications = document.getElementById('settings-nav-button-notifications'); // New
+
+        // Navigation buttons (heatmap screen)
+        const homeNavButtonHeatmap = document.getElementById('home-nav-button-heatmap');
+        const profileNavButtonHeatmap = document.getElementById('profile-nav-button-heatmap');
+        const feedbackNavButtonHeatmap = document.getElementById('feedback-nav-button-heatmap');
+        const notificationsNavButtonHeatmap = document.getElementById('notifications-nav-button-heatmap'); // New
+        const heatmapNavButtonHeatmap = document.getElementById('heatmap-nav-button-heatmap');
+        const settingsNavButtonHeatmap = document.getElementById('settings-nav-button-heatmap');
+
+        // Navigation buttons (settings screen)
+        const homeNavButtonSettings = document.getElementById('home-nav-button-settings');
+        const profileNavButtonSettings = document.getElementById('profile-nav-button-settings');
+        const feedbackNavButtonSettings = document.getElementById('feedback-nav-button-settings');
+        const notificationsNavButtonSettings = document.getElementById('notifications-nav-button-settings'); // New
+        const heatmapNavButtonSettings = document.getElementById('heatmap-nav-button-settings');
+        const settingsNavButtonSettings = document.getElementById('settings-nav-button-settings');
+
+        // Navigation buttons (about screen)
+        const homeNavButtonAbout = document.getElementById('home-nav-button-about');
+        const profileNavButtonAbout = document.getElementById('profile-nav-button-about');
+        // FIX: Removed erroneous assignment to 'document'
+        const feedbackNavButtonAbout = document.getElementById('feedback-nav-button-about');
+        const notificationsNavButtonAbout = document.getElementById('notifications-nav-button-about'); // New
+        const heatmapNavButtonAbout = document.getElementById('heatmap-nav-button-about');
+        const settingsNavButtonAbout = document.getElementById('settings-nav-button-about');
+
+
+        // --- Navigation Logic ---
+        function showScreen(screenToShow) {
+            const allScreens = [introScreen, loginScreen, mainAppScreen, profileScreen, feedbackScreen, notificationsScreen, heatmapScreen, settingsScreen, aboutScreen];
+            allScreens.forEach(screen => screen.classList.add('hidden'));
+            screenToShow.classList.remove('hidden');
+
+            // Update active state for navigation buttons
+            const allNavButtons = document.querySelectorAll('.footer-nav button');
+            allNavButtons.forEach(button => button.classList.remove('active'));
+            if (screenToShow === mainAppScreen) {
+                homeNavButton.classList.add('active');
+            } else if (screenToShow === profileScreen) {
+                profileNavButtonProfile.classList.add('active');
+                loadProfile(); // Load profile data when showing profile screen
+            } else if (screenToShow === feedbackScreen) {
+                feedbackNavButtonFeedback.classList.add('active');
+            } else if (screenToShow === notificationsScreen) { // New
+                notificationsNavButtonNotifications.classList.add('active');
+            } else if (screenToShow === heatmapScreen) {
+                heatmapNavButtonHeatmap.classList.add('active');
+            } else if (screenToShow === settingsScreen) {
+                settingsNavButtonSettings.classList.add('active');
+            } else if (screenToShow === aboutScreen) {
+                settingsNavButtonAbout.classList.add('active'); // About is conceptually under settings
+            }
+        }
+
+        // --- Intro/Walkthrough Logic ---
+        let currentIntroSlideIndex = 0; // Start at 0 for language selection
+        const introSlides = [introSlide0, introSlide1, introSlide2, introSlide3];
+
+        function showIntroSlide(index) {
+            introSlides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.remove('hidden');
+                } else {
+                    slide.classList.add('hidden');
+                }
+            });
+        }
+
+        introNext0Button.addEventListener('click', () => {
+            currentIntroSlideIndex = 1;
+            showIntroSlide(currentIntroSlideIndex);
+        });
+        introNext1Button.addEventListener('click', () => {
+            currentIntroSlideIndex = 2;
+            showIntroSlide(currentIntroSlideIndex);
+        });
+        introNext2Button.addEventListener('click', () => {
+            currentIntroSlideIndex = 3;
+            showIntroSlide(currentIntroSlideIndex);
+        });
+        introGetStartedButton.addEventListener('click', () => {
+            localStorage.setItem('hasSeenIntro', 'true');
+            showScreen(loginScreen);
+        });
+
+        // --- Login/Registration Logic ---
+        loginButton.addEventListener('click', () => {
+            // Simulate login success
+            showMessage("Login successful! Welcome back.", "info");
+            showScreen(mainAppScreen);
+        });
+
+        registerButton.addEventListener('click', () => {
+            // Simulate registration success
+            showMessage("Registration successful! You can now log in.", "info");
+            showScreen(mainAppScreen); // For prototype, directly go to main app
+        });
+
+        // --- Profile Screen Logic (Placeholder) ---
+        function loadProfile() {
+            const savedProfile = localStorage.getItem('profileData');
+            if (savedProfile) {
+                const profile = JSON.parse(savedProfile);
+                profileName.value = profile.name || '';
+                profileAge.value = profile.age || '';
+                profileGender.value = profile.gender || '';
+                profileLocation.value = profile.location || '';
+                profileLastUpdated.textContent = `Last Updated: ${profile.lastUpdated || 'Never'}`;
+            } else {
+                profileName.value = '';
+                profileAge.value = '';
+                profileGender.value = '';
+                profileLocation.value = '';
+                profileLastUpdated.textContent = 'Last Updated: Never';
+            }
+        }
+
+        saveProfileButton.addEventListener('click', () => {
+            const name = profileName.value;
+            const age = profileAge.value;
+            const gender = profileGender.value;
+            const location = profileLocation.value;
+            const lastUpdated = new Date().toLocaleString(); // Get current date/time
+
+            const profileData = { name, age, gender, location, lastUpdated };
+            localStorage.setItem('profileData', JSON.stringify(profileData));
+            console.log("Saving profile:", profileData);
+            showMessage("Profile saved (prototype only).", "info");
+            loadProfile(); // Immediately load to show persistence
+        });
+
+        // --- Feedback Screen Logic (Star Rating & Submission) ---
+        let userRating = 0; // To store the selected rating
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                userRating = parseInt(star.dataset.value);
+                stars.forEach((s, i) => {
+                    if (i < userRating) {
+                        s.classList.add('checked');
+                    } else {
+                        s.classList.remove('checked');
+                    }
+                });
+                showMessage(`You rated us ${userRating} stars!`, "info");
+            });
+        });
+
+        submitFeedbackButton.addEventListener('click', () => {
+            const feedbackText = feedbackInput.value.trim();
+            if (userRating === 0 && !feedbackText) {
+                showMessage("Please provide a rating or some feedback before submitting.", "warning");
+                return;
+            }
+            console.log("Feedback submitted:", { rating: userRating, text: feedbackText });
+            showMessage("Thank you for your valuable feedback!", "info");
+            // Reset form
+            userRating = 0;
+            stars.forEach(s => s.classList.remove('checked'));
+            feedbackInput.value = '';
+        });
+
+        // --- Notifications Logic ---
+        function addUrgentNotification(emotion, issue) {
+            const notificationItem = document.createElement('div');
+            notificationItem.className = 'notification-item urgent';
+            notificationItem.innerHTML = `
+                <strong>Urgent: Support Needed!</strong>
+                <span>Your recent check-in indicated ${emotion} related to ${issue}. Please consider reaching out for immediate support.</span>
+                <span>${new Date().toLocaleTimeString()}</span>
+            `;
+            notificationsList.prepend(notificationItem); // Add to the top of the list
+            showMessage("Urgent notification added to your list!", "error"); // Use error type for urgency
+        }
+
+        // --- Settings Screen Logic (Placeholder) ---
+        dailyNotificationsToggle.addEventListener('change', () => {
+            const status = dailyNotificationsToggle.checked ? "enabled" : "disabled";
+            showMessage(`Daily notifications ${status} (prototype only).`, "info");
+        });
+
+        largeTextToggle.addEventListener('change', () => {
+            const status = largeTextToggle.checked ? "enabled" : "disabled";
+            // In a real app, you'd apply CSS class or change font size
+            document.body.style.fontSize = largeTextToggle.checked ? '1.15em' : '1em';
+            showMessage(`Larger text size ${status} (prototype only).`, "info");
+        });
+
+        aboutNavButtonSettings.addEventListener('click', () => showScreen(aboutScreen));
+        helpNavButtonSettings.addEventListener('click', () => showScreen(aboutScreen)); // "Get Help" navigates to About screen
+
+        clearDataButton.addEventListener('click', () => {
+            localStorage.clear();
+            showMessage("All local data cleared. App will reset on next load.", "info");
+            // Optional: reload page to show immediate effect
+            setTimeout(() => { location.reload(); }, 1500);
+        });
+
+
+        // Add event listeners for navigation buttons (repeated for clarity)
+        homeNavButton.addEventListener('click', () => showScreen(mainAppScreen));
+        profileNavButton.addEventListener('click', () => showScreen(profileScreen));
+        feedbackNavButton.addEventListener('click', () => showScreen(feedbackScreen));
+        notificationsNavButton.addEventListener('click', () => showScreen(notificationsScreen)); // New
+        heatmapNavButton.addEventListener('click', () => showScreen(heatmapScreen));
+        settingsNavButton.addEventListener('click', () => showScreen(settingsScreen));
+
+        homeNavButtonProfile.addEventListener('click', () => showScreen(mainAppScreen));
+        profileNavButtonProfile.addEventListener('click', () => showScreen(profileScreen));
+        feedbackNavButtonProfile.addEventListener('click', () => showScreen(feedbackScreen));
+        notificationsNavButtonProfile.addEventListener('click', () => showScreen(notificationsScreen)); // New
+        heatmapNavButtonProfile.addEventListener('click', () => showScreen(heatmapScreen));
+        settingsNavButtonProfile.addEventListener('click', () => showScreen(settingsScreen));
+
+        homeNavButtonFeedback.addEventListener('click', () => showScreen(mainAppScreen));
+        profileNavButtonFeedback.addEventListener('click', () => showScreen(profileScreen));
+        feedbackNavButtonFeedback.addEventListener('click', () => showScreen(feedbackScreen));
+        notificationsNavButtonFeedback.addEventListener('click', () => showScreen(notificationsScreen)); // New
+        heatmapNavButtonFeedback.addEventListener('click', () => showScreen(heatmapScreen));
+        settingsNavButtonFeedback.addEventListener('click', () => showScreen(settingsScreen));
+
+        homeNavButtonNotifications.addEventListener('click', () => showScreen(mainAppScreen)); // New
+        profileNavButtonNotifications.addEventListener('click', () => showScreen(profileScreen)); // New
+        feedbackNavButtonNotifications.addEventListener('click', () => showScreen(feedbackScreen)); // New
+        notificationsNavButtonNotifications.addEventListener('click', () => showScreen(notificationsScreen)); // New
+        heatmapNavButtonNotifications.addEventListener('click', () => showScreen(heatmapScreen)); // New
+        settingsNavButtonNotifications.addEventListener('click', () => showScreen(settingsScreen)); // New
+
+        homeNavButtonHeatmap.addEventListener('click', () => showScreen(mainAppScreen));
+        profileNavButtonHeatmap.addEventListener('click', () => showScreen(profileScreen));
+        feedbackNavButtonHeatmap.addEventListener('click', () => showScreen(feedbackScreen));
+        notificationsNavButtonHeatmap.addEventListener('click', () => showScreen(notificationsScreen)); // New
+        heatmapNavButtonHeatmap.addEventListener('click', () => showScreen(heatmap-screen));
+        settingsNavButtonHeatmap.addEventListener('click', () => showScreen(settingsScreen));
+
+        homeNavButtonSettings.addEventListener('click', () => showScreen(mainAppScreen));
+        profileNavButtonSettings.addEventListener('click', () => showScreen(profileScreen));
+        feedbackNavButtonSettings.addEventListener('click', () => showScreen(feedbackScreen));
+        notificationsNavButtonSettings.addEventListener('click', () => showScreen(notificationsScreen)); // New
+        heatmapNavButtonSettings.addEventListener('click', () => showScreen(heatmapScreen));
+        settingsNavButtonSettings.addEventListener('click', () => showScreen(settingsScreen));
+
+        homeNavButtonAbout.addEventListener('click', () => showScreen(mainAppScreen));
+        profileNavButtonAbout.addEventListener('click', () => showScreen(profileScreen));
+        feedbackNavButtonAbout.addEventListener('click', () => showScreen(feedbackScreen));
+        notificationsNavButtonAbout.addEventListener('click', () => showScreen(notificationsScreen)); // New
+        heatmapNavButtonAbout.addEventListener('click', () => showScreen(heatmapScreen));
+        settingsNavButtonAbout.addEventListener('click', () => showScreen(settingsScreen));
+
+
+        // --- Language Management ---
+        let currentLanguage = localStorage.getItem('preferredLanguage') || 'en-US';
+        languageSelect.value = currentLanguage; // Set settings page dropdown
+        initialLanguageSelect.value = currentLanguage; // Set initial intro dropdown
+
+        // Event listener for initial language selection
+        initialLanguageSelect.addEventListener('change', (event) => {
+            currentLanguage = event.target.value;
+            localStorage.setItem('preferredLanguage', currentLanguage);
+            if (recognition) {
+                recognition.lang = currentLanguage;
+            }
+            languageSelect.value = currentLanguage; // Sync settings dropdown
+            showMessage(`Language set to ${initialLanguageSelect.options[initialLanguageSelect.selectedIndex].text}.`, "info");
+        });
+
+        // Event listener for settings page language selection
+        languageSelect.addEventListener('change', (event) => {
+            currentLanguage = event.target.value;
+            localStorage.setItem('preferredLanguage', currentLanguage);
+            if (recognition) {
+                recognition.lang = currentLanguage;
+            }
+            initialLanguageSelect.value = currentLanguage; // Sync intro dropdown
+            showMessage(`Language set to ${languageSelect.options[languageSelect.selectedIndex].text}.`, "info");
+        });
+
+
+        // --- Speech Recognition (Voice Input) ---
+        let recognition;
+        let isRecording = false;
+
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = currentLanguage; // Set initial language
+
+            recognition.onstart = () => {
+                isRecording = true;
+                microphoneButton.classList.add('recording');
+                microphoneButton.innerHTML = '<i class="fas fa-stop"></i> Stop Recording';
+                showMessage("Listening... Speak now.", "info");
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                userInput.value = transcript;
+                showMessage("Voice input received. Tap 'Process My Feelings'.", "info");
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+                showMessage(`Voice input error: ${event.error}. Please try again.`, "error");
+                isRecording = false;
+                microphoneButton.classList.remove('recording');
+                microphoneButton.innerHTML = '<i class="fas fa-microphone"></i>';
+            };
+
+            recognition.onend = () => {
+                isRecording = false;
+                microphoneButton.classList.remove('recording');
+                microphoneButton.innerHTML = '<i class="fas fa-microphone"></i>';
+            };
+
+            microphoneButton.addEventListener('click', () => {
+                if (isRecording) {
+                    recognition.stop();
+                } else {
+                    recognition.start();
+                }
+            });
+        } else {
+            microphoneButton.style.display = 'none';
+            showMessage("Speech recognition not supported in this browser.", "warning");
+        }
+
+        // --- Speech Synthesis (Voice Output) ---
+        const synth = window.speechSynthesis;
+
+        speakResponseButton.addEventListener('click', () => {
+            const responseText = document.getElementById('response-output').textContent;
+            const supportTextElements = supportOutputContainer.querySelectorAll('.support-item');
+            let supportText = '';
+            supportTextElements.forEach(item => {
+                // Extract only the selected language text for speaking
+                const mainText = item.querySelector('strong').textContent + ' ' + item.childNodes[2].textContent.split('(')[0].trim(); // Name (Type)
+                const locationText = item.childNodes[4].textContent.replace('Location: ', '').trim();
+                const contactText = item.childNodes[6].textContent.replace('Contact: ', '').trim();
+                supportText += `${mainText}. Location: ${locationText}. Contact: ${contactText}. `;
+            });
+
+            const textToSpeak = responseText + ". " + supportText;
+
+            if (synth.speaking) {
+                synth.cancel(); // Stop current speech if any
+            }
+            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = currentLanguage; // Use selected language for output
+            synth.speak(utterance);
+        });
+
+
+        // --- Core AI Processing Logic ---
+        processButton.addEventListener('click', async () => {
+            const prompt = userInput.value.trim();
+            if (!prompt) {
+                showMessage("Please enter your thoughts or concerns.", "warning");
+                return;
+            }
+
+            loadingSpinner.classList.add('show');
+            outputDisplay.classList.add('hidden');
+            errorMessage.classList.remove('show');
+            supportOutputContainer.innerHTML = ''; // Clear previous suggestions
+
+            try {
+                // Construct the prompt for the LLM with structured dual-language output and India-specific dummy data
+                const llmPrompt = `Analyze the following user input for emotion, primary issue, an empathetic response, and suggest 1-3 relevant support networks for migrants in India.
+                Provide the empathetic response and support network details in both the user's selected language and English.
+                For support networks, provide dummy but realistic-looking names, types, locations (Indian cities/states), and contact info.
+
+                User's selected language code: "${currentLanguage}"
+
+                User Input: "${prompt}"
+
+                Provide the output in a structured JSON format with the following keys:
+                "emotion": (e.g., "Sadness", "Anger", "Anxiety", "Hope", "Neutral" - English only)
+                "issue": (e.g., "Job Loss", "Loneliness", "Discrimination", "Financial Hardship", "Health Concern", "Legal Issue", "Family Conflict", "Housing")
+                "empathetic_response": {
+                    "selected_language": "Empathetic response in the user's selected language.",
+                    "english": "Empathetic response in English."
+                },
+                "support_suggestions": [
+                    {
+                        "name": "Name of Organization (English)",
+                        "type": "Type of Support (English)",
+                        "location": "City/State, India (English)",
+                        "contact": "Dummy Contact Info (e.g., +91-XXXXXXXXXX, help@example.org)",
+                        "name_selected_language": "Name of Organization in selected language",
+                        "type_selected_language": "Type of Support in selected language",
+                        "location_selected_language": "City/State, India in selected language"
+                    }
+                ]
+                `;
+
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: llmPrompt }] });
+
+                const payload = {
+                    contents: chatHistory,
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                "emotion": { "type": "STRING" },
+                                "issue": { "type": "STRING" },
+                                "empathetic_response": {
+                                    "type": "OBJECT",
+                                    "properties": {
+                                        "selected_language": { "type": "STRING" },
+                                        "english": { "type": "STRING" }
+                                    }
+                                },
+                                "support_suggestions": {
+                                    "type": "ARRAY",
+                                    "items": {
+                                        type: "OBJECT",
+                                        properties: {
+                                            "name": { "type": "STRING" },
+                                            "type": { "type": "STRING" },
+                                            "location": { "type": "STRING" },
+                                            "contact": { "type": "STRING" },
+                                            "name_selected_language": { "type": "STRING" },
+                                            "type_selected_language": { "type": "STRING" },
+                                            "location_selected_language": { "type": "STRING" }
+                                        },
+                                        "propertyOrdering": ["name", "type", "location", "contact", "name_selected_language", "type_selected_language", "location_selected_language"]
+                                    }
+                                }
+                            },
+                            "propertyOrdering": ["emotion", "issue", "empathetic_response", "support_suggestions"]
+                        }
+                    }
+                };
+
+                const apiKey = ""; // Canvas will automatically provide the API key
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const jsonString = result.candidates[0].content.parts[0].text;
+                    const parsedData = JSON.parse(jsonString);
+
+                    emotionOutput.textContent = parsedData.emotion || 'N/A';
+                    issueOutput.textContent = parsedData.issue || 'N/A';
+
+                    // Display empathetic response in both languages
+                    responseOutput.innerHTML = `
+                        ${parsedData.empathetic_response?.selected_language || 'Could not generate response in selected language.'}
+                        <div class="language-output">(${parsedData.empathetic_response?.english || 'Could not generate English response.'})</div>
+                    `;
+
+                    // Display structured support suggestions in both languages
+                    if (parsedData.support_suggestions && parsedData.support_suggestions.length > 0) {
+                        parsedData.support_suggestions.forEach(suggestion => {
+                            const div = document.createElement('div');
+                            div.className = 'support-item';
+                            div.innerHTML = `
+                                <strong>${suggestion.name_selected_language || suggestion.name || 'N/A'}</strong> (${suggestion.type_selected_language || suggestion.type || 'N/A'})<br>
+                                Location: ${suggestion.location_selected_language || suggestion.location || 'N/A'}<br>
+                                Contact: ${suggestion.contact || 'N/A'}
+                                <div class="language-output">
+                                    (English: <strong>${suggestion.name || 'N/A'}</strong> (${suggestion.type || 'N/A'}), Location: ${suggestion.location || 'N/A'})
+                                </div>
+                            `;
+                            supportOutputContainer.appendChild(div);
+                        });
+                    } else {
+                        supportOutputContainer.textContent = 'No specific suggestions.';
+                    }
+
+                    outputDisplay.classList.remove('hidden');
+                    speakResponseButton.classList.remove('hidden'); // Show speak button
+
+                    // --- Save data to Firestore and check for urgent notification ---
+                    if (firestoreDb && userId) { // Using firestoreDb
+                        const wellbeingEntry = {
+                            userId: userId,
+                            timestamp: new Date().toISOString(), // ISO string for consistent date format
+                            userInput: prompt,
+                            emotion: parsedData.emotion,
+                            issue: parsedData.issue,
+                            empathetic_response: parsedData.empathetic_response,
+                            support_suggestions: parsedData.support_suggestions,
+                            language: currentLanguage
+                        };
+                        try {
+                            await addDoc(collection(firestoreDb, `artifacts/${appId}/users/${userId}/wellbeing_entries`), wellbeingEntry); // Using firestoreDb
+                            console.log("Wellbeing data saved to Firestore:", wellbeingEntry);
+
+                            // Check for worsening wellbeing to trigger notification
+                            const negativeEmotions = ["Sadness", "Anger", "Anxiety", "Distress", "Despair", "Fear", "Grief", "Frustration", "Hopelessness"];
+                            if (negativeEmotions.includes(parsedData.emotion)) {
+                                addUrgentNotification(parsedData.emotion, parsedData.issue);
+                            }
+
+                        } catch (firestoreError) {
+                            console.error("Error saving wellbeing data to Firestore:", firestoreError);
+                            showMessage("Could not save wellbeing data (prototype only).", "error");
+                        }
+                    } else {
+                        console.warn("Firestore not initialized or userId not available. Data not saved.");
+                    }
+
+
+                } else {
+                    showMessage("Could not get a valid response from the AI. Please try again.", "error");
+                    console.error("Unexpected AI response structure:", result);
+                }
+
+            } catch (error) {
+                showMessage(`An error occurred: ${error.message}. Please try again.`, "error");
+                console.error("Error processing input:", error);
+            } finally {
+                loadingSpinner.classList.remove('show');
+            }
+        });
+
+        // --- Message Box Function ---
+        function showMessage(message, type = "info") {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            errorMessage.classList.remove('error', 'warning', 'info'); // Clear previous types
+            errorMessage.classList.add(type); // Add current type
+
+            // Set specific styles based on type
+            if (type === "error") {
+                errorMessage.style.backgroundColor = "#ffc2c2";
+                errorMessage.style.color = "#990000";
+                errorMessage.style.borderColor = "#ff9999";
+            } else if (type === "warning") {
+                errorMessage.style.backgroundColor = "#ffe9a7";
+                errorMessage.style.color = "#a06000";
+                errorMessage.style.borderColor = "#ffd76f";
+            } else { // info
+                errorMessage.style.backgroundColor = "#e6f7f9";
+                errorMessage.style.color = "#2196f3";
+                errorMessage.style.borderColor = "#90caf9";
+            }
+        }
+
+        // Initial screen display based on whether user has seen intro
+        window.onload = () => {
+            if (localStorage.getItem('hasSeenIntro') === 'true') {
+                showScreen(loginScreen);
+            } else {
+                showScreen(introScreen);
+                showIntroSlide(0); // Start with the new language selection slide
+            }
+        };
+    </script>
+       // This part tells your browser to start the "Magic Helper" when the page loads
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      })
+      .catch(err => {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+  });
+}
+</body>
+</html>

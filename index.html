@@ -825,10 +825,17 @@
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, doc, setDoc, addDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global variables for Firebase (MANDATORY TO USE)
+        // Global variables for Canvas environment (MANDATORY TO USE within Canvas)
+        // If hosting this code outside of the Canvas environment (e.g., on GitHub Pages),
+        // you will need to manually provide your Firebase config and Gemini API key.
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // IMPORTANT: If hosting outside Canvas, replace "YOUR_GEMINI_API_KEY_HERE" with your actual API key.
+        // Get your API key from Google AI Studio: https://aistudio.google.com/app/apikey
+        const apiKey = ""; // If you are hosting this on GitHub, replace this with your actual API key.
+
 
         // Renamed db to firestoreDb and auth to firebaseAuth to avoid potential global conflicts
         let app, firestoreDb, firebaseAuth, userId;
@@ -1397,7 +1404,7 @@
                     }
                 };
 
-                const apiKey = ""; // Canvas will automatically provide the API key
+                // Use the defined apiKey variable
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {

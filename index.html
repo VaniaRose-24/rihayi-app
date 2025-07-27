@@ -1,25 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="manifest" href="/manifest.json">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RIHAYI: Voice Unchained. Lives Reclaimed.</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <!-- PWA Manifest Link -->
-    <link rel="manifest" href="/manifest.json">
-
-    <!-- Apple-specific meta tags for full-screen and status bar appearance -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="RIHAYI">
-    <!-- Apple Touch Icon (using a placeholder, replace with your actual app icon) -->
-    <link rel="apple-touch-icon" href="https://placehold.co/180x180/6b8e23/ffffff?text=RI">
-
-
     <style>
         body {
             font-family: 'Montserrat', sans-serif; /* Changed font to Montserrat */
@@ -31,1523 +19,432 @@
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
-            /* Ensure body fills viewport for full-screen effect */
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden; /* Prevent scrolling if content overflows */
         }
         .container {
             background-color: #ffffff;
             border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Softer shadow */
             padding: 30px;
-            max-width: 600px;
             width: 100%;
-            height: 100%; /* Make container fill available height */
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            border: 1px solid #f7e7df; /* Subtle warmer border */
-            overflow-y: auto; /* Allow scrolling within the container if content is long */
-            box-sizing: border-box; /* Include padding in height calculation */
-        }
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #6b8e23; /* Olive Green for a natural, human feel */
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
-        }
-        h2 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: #4a4a4a; /* Dark Gray for text */
-            margin-bottom: 20px;
+            max-width: 500px;
+            text-align: center;
         }
         .logo {
-            font-family: 'Montserrat', sans-serif; /* Ensure logo also uses Montserrat */
-            font-size: 3.5rem;
-            margin-bottom: 5px; /* Reduced margin to bring tagline closer */
-            color: #6b8e23; /* Matching olive green */
-            font-weight: 900;
-            letter-spacing: -2px; /* Slightly tighter for modern feel */
-            position: relative;
-            display: inline-block;
-        }
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: 0px; /* Adjust based on desired underline position */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%; /* Adjust width of underline */
-            height: 4px; /* Thickness of underline */
-            background-color: #e67e22; /* Orange-brown underline */
-            border-radius: 2px;
-        }
-        .tagline {
-            font-size: 0.95rem;
-            color: #7f8c8d;
+            width: 80px;
+            height: 80px;
             margin-bottom: 20px;
-            font-weight: 500;
+            border-radius: 50%; /* Make it circular */
+            object-fit: cover;
+        }
+        h1, h2, h3 {
+            color: #4a4a4a; /* Darker grey for headings */
+            margin-bottom: 15px;
+        }
+        p {
+            color: #7a7a7a; /* Medium grey for text */
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .button {
+            background-color: #ff7f50; /* Coral for buttons */
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+        }
+        .button:hover {
+            background-color: #ff6347; /* Slightly darker coral on hover */
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
         }
         .input-group label {
             display: block;
-            text-align: left;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #5a5a5a; /* Slightly lighter dark gray */
+            margin-bottom: 5px;
+            color: #4a4a4a;
+            font-weight: 500;
         }
-        .input-group input,
+        .input-group input[type="email"],
+        .input-group input[type="password"],
+        .input-group input[type="text"],
         .input-group textarea,
         .input-group select {
             width: 100%;
-            padding: 14px 18px;
-            border: 1px solid #e0d8c7; /* Light beige border */
-            border-radius: 12px;
-            font-size: 1.05rem;
-            color: #4a4a4a;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
             box-sizing: border-box;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            background-color: #fffaf5; /* Very light off-white background */
-        }
-        .input-group input:focus,
-        .input-group textarea:focus,
-        .input-group select:focus {
-            outline: none;
-            border-color: #6b8e23; /* Olive green focus */
-            box-shadow: 0 0 0 4px rgba(107, 142, 35, 0.25);
-        }
-        button {
-            background-color: #e67e22; /* Warm orange-brown */
-            color: white;
-            padding: 14px 30px;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.15s ease, box-shadow 0.3s ease;
-            border: none;
-            box-shadow: 0 6px 15px rgba(230, 126, 34, 0.4);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        button:hover {
-            background-color: #d35400; /* Darker orange-brown on hover */
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(230, 126, 34, 0.5);
-        }
-        button:active {
-            transform: translateY(0);
-            box-shadow: 0 3px 8px rgba(230, 126, 34, 0.3);
-        }
-        .output-section {
-            background-color: #fff5e6; /* Light orange/cream background */
-            border-radius: 16px;
-            padding: 25px;
-            text-align: left;
-            margin-top: 25px;
-            border: 1px solid #f0e0c7; /* Matching light border */
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
-        }
-        .output-section p {
-            margin-bottom: 12px;
+            font-size: 16px;
             color: #4a4a4a;
-            line-height: 1.7;
-            font-size: 1.05rem;
+            background-color: #fcfcfc;
         }
-        .output-section strong {
-            color: #6b8e23; /* Olive green for strong text */
+        .input-group textarea {
+            min-height: 100px;
+            resize: vertical;
         }
-        .message-box {
-            background-color: #ffe9a7; /* Light yellow for warnings */
-            color: #a06000; /* Darker yellow text */
-            border: 1px solid #ffd76f;
-            border-radius: 10px;
-            padding: 18px;
-            margin-top: 20px;
-            text-align: left;
+        .link {
+            color: #ff7f50;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .link:hover {
+            color: #ff6347;
+        }
+        .screen {
             display: none;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        .message-box.show {
+        .screen.active {
             display: block;
         }
-        .message-box.error {
-            background-color: #ffc2c2; /* Light red for errors */
-            color: #990000; /* Dark red text */
-            border-color: #ff9999;
-        }
-        .message-box.info {
-            background-color: #e6f7f9; /* Still light blue-green for info */
-            color: #2196f3;
-            border-color: #90caf9;
-        }
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #e67e22; /* Orange-brown spinner */
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-            display: none;
-        }
-        .spinner.show {
-            display: block;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .hidden {
-            display: none;
-        }
-        .footer-nav {
+        .intro-slides {
             display: flex;
-            justify-content: space-around;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #f0e0c7; /* Warmer border */
-            background-color: #fcf3e6; /* Slightly different background for nav */
-            border-radius: 0 0 24px 24px;
-            margin: 20px -30px -30px -30px;
-            padding: 20px 30px;
-            flex-shrink: 0; /* Prevent footer from shrinking */
-        }
-        .footer-nav button {
-            background: none;
-            color: #7f8c8d; /* Soft gray */
-            padding: 10px 18px;
-            font-weight: 600;
-            box-shadow: none;
-            transition: color 0.2s ease, transform 0.1s ease;
-            border-radius: 10px;
-        }
-        .footer-nav button:hover {
-            color: #e67e22; /* Orange-brown on hover */
-            transform: translateY(-2px);
-        }
-        .footer-nav button.active {
-            color: #e67e22;
-            font-weight: 800;
-            border-bottom: 3px solid #e67e22; /* Thicker active indicator */
-            border-radius: 0;
-            transform: none;
-        }
-        .microphone-button {
-            background-color: #3498db; /* Softer blue for microphone */
-            color: white;
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease;
-            border: none;
-            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
-            margin-left: 10px;
-        }
-        .microphone-button:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-        }
-        .microphone-button.recording {
-            background-color: #e74c3c; /* Softer red when recording */
-            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4);
-        }
-        .microphone-button.recording:hover {
-            background-color: #c0392b;
-        }
-        .input-with-mic {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .input-with-mic textarea {
-            flex-grow: 1;
-        }
-        .support-item {
-            background-color: #fffaf5; /* Very light off-white */
-            border: 1px solid #f0e0c7;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        .support-item strong {
-            color: #6b8e23; /* Olive green */
-        }
-        .language-output {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px dashed #f0e0c7;
-            font-size: 0.9em;
-            color: #7f8c8d;
+            overflow: hidden;
+            width: 100%;
+            height: 100%; /* Adjust as needed */
+            position: relative;
         }
         .intro-slide {
+            min-width: 100%;
+            transition: transform 0.5s ease-in-out;
+            box-sizing: border-box;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            background-color: #fff5e6;
-            border-radius: 16px;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .intro-slide img {
+            max-width: 80%;
+            height: auto;
             margin-bottom: 20px;
         }
-        .intro-slide h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #e67e22;
-            margin-bottom: 15px;
-        }
-        .intro-slide p {
-            color: #4a4a4a;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        .intro-slide button {
-            margin-top: 15px;
-        }
-        .heatmap-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr); /* 7 days a week */
-            gap: 4px;
-            padding: 10px;
-            background-color: #f0e0c7;
-            border-radius: 12px;
+        .progress-dots {
+            display: flex;
+            justify-content: center;
             margin-top: 20px;
         }
-        .heatmap-cell {
-            width: 35px; /* Fixed size for visual consistency */
-            height: 35px;
-            border-radius: 6px;
-            background-color: #dcdcdc; /* Default neutral */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7em;
-            color: #555;
-            font-weight: 500;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-        /* Example heatmap colors */
-        .mood-low { background-color: #ffc2c2; } /* Reddish for low mood */
-        .mood-medium { background-color: #ffe9a7; } /* Yellowish for medium mood */
-        .mood-high { background-color: #a7d9ed; } /* Bluish for high mood */
-        .mood-neutral { background-color: #dcdcdc; } /* Grayish for neutral */
-        .mood-positive { background-color: #b3e6b3; } /* Greenish for positive */
-
-        .heatmap-legend {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-            font-size: 0.85em;
-            color: #4a4a4a;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .legend-color-box {
-            width: 15px;
-            height: 15px;
-            border-radius: 4px;
-        }
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            -webkit-transition: .4s;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            -webkit-transition: .4s;
-            transition: .4s;
+        .dot {
+            height: 10px;
+            width: 10px;
+            background-color: #bbb;
             border-radius: 50%;
-        }
-        input:checked + .slider {
-            background-color: #6b8e23; /* Olive green when checked */
-        }
-        input:focus + .slider {
-            box-shadow: 0 0 1px #6b8e23;
-        }
-        input:checked + .slider:before {
-            -webkit-transform: translateX(26px);
-            -ms-transform: translateX(26px);
-            transform: translateX(26px);
-        }
-        .settings-option {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #f0e0c7;
-        }
-        .settings-option:last-child {
-            border-bottom: none;
-        }
-        .star-rating {
             display: inline-block;
-            font-size: 2rem; /* Larger stars */
-            margin-top: 15px;
-        }
-        .star-rating .fa-star {
-            color: #ccc; /* Default star color */
+            margin: 0 5px;
             cursor: pointer;
-            transition: color 0.2s;
         }
-        .star-rating .fa-star.checked {
-            color: #f39c12; /* Gold color for checked stars */
+        .dot.active {
+            background-color: #ff7f50;
         }
-        .notification-item {
-            background-color: #fffaf5;
-            border: 1px solid #f0e0c7;
-            border-radius: 10px;
+        .speech-bubble {
+            background-color: #f0f0f0;
+            border-radius: 15px;
             padding: 15px;
-            margin-bottom: 10px;
+            margin-top: 15px;
             text-align: left;
         }
-        .notification-item strong {
-            color: #e67e22;
+        .speech-bubble p {
+            margin-bottom: 5px;
         }
-        .notification-item span {
-            font-size: 0.85em;
-            color: #7f8c8d;
+        .speech-bubble .timestamp {
+            font-size: 0.8em;
+            color: #888;
+            text-align: right;
+        }
+        .status-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 500;
+            border: 1px solid;
+            display: none; /* Hidden by default */
+        }
+        .status-message.active {
             display: block;
-            margin-top: 5px;
-        }
-        .notification-item.urgent { /* Style for urgent notifications */
-            background-color: #fff0f0; /* Very light red */
-            border-color: #ffaaaa; /* Light red border */
-            color: #cc0000; /* Darker red text */
-        }
-        .notification-item.urgent strong {
-            color: #cc0000; /* Darker red for urgent strong text */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div id="intro-screen">
-            <div class="logo">RIHAYI</div>
-            <p class="tagline">A Voice for Every Journey. A Hope for Every Heart.</p>
-            <div class="intro-slide" id="intro-slide-0">
-                <h3>Choose Your Language</h3>
-                <p>Select your preferred language for a personalized experience.</p>
-                <div class="input-group mt-4">
-                    <label for="initial-language-select" class="sr-only">Preferred Language</label>
-                    <select id="initial-language-select">
-                        <option value="en-US">English (US)</option>
-                        <option value="hi-IN">Hindi (India)</option>
-                        <option value="bn-IN">Bengali (India)</option>
-                        <option value="mr-IN">Marathi (India)</option>
-                        <option value="ta-IN">Tamil (India)</option>
-                        <option value="te-IN">Telugu (India)</option>
-                        <option value="kn-IN">Kannada (India)</option>
-                        <option value="ml-IN">Malayalam (India)</option>
-                        <option value="gu-IN">Gujarati (India)</option>
-                        <option value="pa-IN">Punjabi (India)</option>
-                        <option value="ur-IN">Urdu (India)</option>
-                        <option value="as-IN">Assamese (India)</option>
-                        <option value="or-IN">Oriya (India)</option>
-                        <option value="sa-IN">Sanskrit (India)</option>
-                        <option value="kok-IN">Konkani (India)</option>
-                        <option value="ne-NP">Nepali (Nepal - common in India)</option>
-                        <option value="my-MM">Burmese (Myanmar - common in India)</option>
-                        <option value="es-ES">Spanish (Spain)</option>
-                        <option value="fr-FR">French (France)</option>
-                        <option value="de-DE">German (Germany)</option>
-                    </select>
+        <div id="introScreen" class="screen active">
+            <img src="https://via.placeholder.com/100" alt="App Logo" class="mx-auto logo">
+            <h1 class="text-3xl font-bold mb-4">RIHAYI: Voice Unchained. Lives Reclaimed.</h1>
+            <p>Empowering you with the magic of language, connecting hearts and minds, transcending barriers.</p>
+
+            <div class="intro-slides-container relative w-full overflow-hidden">
+                <div class="intro-slides flex transition-transform duration-500 ease-in-out">
+                    <div class="intro-slide flex-shrink-0">
+                        <h2 class="text-2xl font-semibold mb-4">Choose Your Language</h2>
+                        <p>Select the language you'll be speaking and the language you want to hear back in.</p>
+                        <div class="input-group w-full mb-4">
+                            <label for="inputLanguage">My Language (I speak)</label>
+                            <select id="inputLanguage" class="w-full">
+                                <option value="en-US">English (US)</option>
+                                <option value="hi-IN">Hindi (India)</option>
+                                <option value="es-ES">Spanish (Spain)</option>
+                                <option value="fr-FR">French (France)</option>
+                                </select>
+                        </div>
+                        <div class="input-group w-full mb-4">
+                            <label for="outputLanguage">Output Language (I want to hear)</label>
+                            <select id="outputLanguage" class="w-full">
+                                <option value="en-US">English (US)</option>
+                                <option value="hi-IN">Hindi (India)</option>
+                                <option value="es-ES">Spanish (Spain)</option>
+                                <option value="fr-FR">French (France)</option>
+                                </select>
+                        </div>
+                        <button id="nextIntroButton1" class="button">Next</button>
+                    </div>
+
+                    <div class="intro-slide flex-shrink-0">
+                        <img src="https://via.placeholder.com/200x150" alt="Feature 1" class="mx-auto mb-4">
+                        <h2 class="text-2xl font-semibold mb-4">Real-time Translation</h2>
+                        <p>Speak naturally, and our AI translates instantly, bridging language gaps effortlessly.</p>
+                        <button id="nextIntroButton2" class="button">Next</button>
+                    </div>
+
+                    <div class="intro-slide flex-shrink-0">
+                        <img src="https://via.placeholder.com/200x150" alt="Feature 2" class="mx-auto mb-4">
+                        <h2 class="text-2xl font-semibold mb-4">Privacy & Security</h2>
+                        <p>Your conversations are protected with advanced encryption and privacy measures.</p>
+                        <button id="nextIntroButton3" class="button">Next</button>
+                    </div>
+
+                    <div class="intro-slide flex-shrink-0">
+                        <img src="https://via.placeholder.com/200x150" alt="Feature 3" class="mx-auto mb-4">
+                        <h2 class="text-2xl font-semibold mb-4">Easy to Use</h2>
+                        <p>A simple, intuitive interface designed for everyone, everywhere.</p>
+                        <button id="nextIntroButton4" class="button">Get Started!</button>
+                    </div>
                 </div>
-                <button id="intro-next-0" class="mt-4">Continue <i class="fas fa-arrow-right"></i></button>
             </div>
-            <div class="intro-slide hidden" id="intro-slide-1">
-                <h3>Welcome to RIHAYI!</h3>
-                <p>Your voice matters. We're here to listen, understand, and connect you with support, in your language.</p>
-                <button id="intro-next-1">Next <i class="fas fa-arrow-right"></i></button>
-            </div>
-            <div class="intro-slide hidden" id="intro-slide-2">
-                <h3>How RIHAYI Works</h3>
-                <p>Simply speak or type your feelings. Our system will understand your emotions and issues, and provide empathetic responses.</p>
-                <button id="intro-next-2">Next <i class="fas fa-arrow-right"></i></button>
-            </div>
-            <div class="intro-slide hidden" id="intro-slide-3">
-                <h3>Find Support</h3>
-                <p>We'll suggest relevant support networks with contact details. You can also track your emotional wellbeing over time.</p>
-                <button id="intro-get-started">Get Started <i class="fas fa-hand-point-right"></i></button>
-            </div>
+            <div class="progress-dots"></div>
         </div>
 
-        <div id="login-screen" class="hidden">
-            <div class="logo">RIHAYI</div>
-            <p class="tagline">A Voice for Every Journey. A Hope for Every Heart.</p>
-            <h1>Welcome to RIHAYI</h1>
-            <p class="text-gray-600 mb-6">Voice Unchained. Lives Reclaimed.</p>
-            <div class="input-group mb-4">
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Enter your username">
-            </div>
-            <div class="input-group mb-6">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter your password">
-            </div>
-            <button id="login-button">Login</button>
-            <button id="register-button" class="mt-4" style="background-color: #6b8e23; box-shadow: 0 6px 15px rgba(107, 142, 35, 0.4);">Register</button>
-            <p class="text-sm text-gray-500 mt-4">This is a prototype. No actual login/registration is required.</p>
-        </div>
-
-        <div id="main-app-screen" class="hidden">
-            <div class="logo">RIHAYI</div>
-            <p class="tagline">A Voice for Every Journey. A Hope for Every Heart.</p>
-            <h2 class="text-gray-700">How are you feeling today?</h2>
-
+        <div id="loginScreen" class="screen">
+            <img src="https://via.placeholder.com/100" alt="App Logo" class="mx-auto logo">
+            <h2 class="text-2xl font-semibold mb-6">Welcome Back!</h2>
             <div class="input-group">
-                <label for="user-input">Share your thoughts or concerns:</label>
-                <div class="input-with-mic">
-                    <textarea id="user-input" rows="6" placeholder="Type here or tap the microphone to speak..."></textarea>
-                    <button id="microphone-button" class="microphone-button" title="Start Voice Input">
-                        <i class="fas fa-microphone"></i>
-                    </button>
-                </div>
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" placeholder="your@example.com">
             </div>
-
-            <button id="process-button" class="mt-4">Process My Feelings</button>
-            <div class="spinner mt-4" id="loading-spinner"></div>
-            <div class="message-box" id="error-message"></div>
-
-            <div id="output-display" class="output-section mt-6 hidden">
-                <p><strong>Emotion:</strong> <span id="emotion-output"></span></p>
-                <p><strong>Issue:</strong> <span id="issue-output"></span></p>
-                <p><strong>Empathetic Response:</strong> <span id="response-output"></span></p>
-                <button id="speak-response-button" class="mt-2 text-sm">
-                    <i class="fas fa-volume-up"></i> Speak Response
-                </button>
-                <p class="mt-4"><strong>Support Network Suggestions:</strong></p>
-                <div id="support-output-container">
-                    <!-- Support suggestions will be dynamically inserted here -->
-                </div>
+            <div class="input-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" placeholder="********">
             </div>
-
-            <div class="footer-nav">
-                <button id="home-nav-button" class="active">Home</button>
-                <button id="profile-nav-button">Profile</button>
-                <button id="feedback-nav-button">Feedback</button>
-                <button id="notifications-nav-button">Notifications</button> <!-- New Notifications Nav Button -->
-                <button id="heatmap-nav-button">Wellbeing</button>
-                <button id="settings-nav-button">Settings</button>
-            </div>
+            <button id="loginButton" class="button w-full mb-4">Login</button>
+            <p>Don't have an account? <a href="#" id="showSignupLink" class="link">Sign Up</a></p>
         </div>
 
-        <div id="profile-screen" class="hidden">
-            <h2 class="text-green-600">Your Profile</h2>
-            <p class="text-gray-700">Manage your personal information.</p>
-            <div class="input-group mt-4">
-                <label for="profile-name">Name:</label>
-                <input type="text" id="profile-name" placeholder="Your Name">
+        <div id="signupScreen" class="screen">
+            <img src="https://via.placeholder.com/100" alt="App Logo" class="mx-auto logo">
+            <h2 class="text-2xl font-semibold mb-6">Create Your Account</h2>
+            <div class="input-group">
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" placeholder="your@example.com">
             </div>
-            <div class="input-group mt-4">
-                <label for="profile-age">Age:</label>
-                <input type="number" id="profile-age" placeholder="Your Age">
+            <div class="input-group">
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" placeholder="********">
             </div>
-            <div class="input-group mt-4">
-                <label for="profile-gender">Gender:</label>
-                <select id="profile-gender">
-                    <option value="">Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                    <option value="prefer_not_say">Prefer not to say</option>
-                </select>
-            </div>
-            <div class="input-group mt-4">
-                <label for="profile-location">Location (City/State):</label>
-                <input type="text" id="profile-location" placeholder="e.g., Mumbai, Maharashtra">
-            </div>
-            <button id="save-profile-button" class="mt-6">Save Profile</button>
-            <p class="text-sm text-gray-500 mt-4" id="profile-last-updated">Last Updated: Never</p> <!-- New timestamp -->
-            <p class="text-gray-600 mt-4">User ID: <span id="display-user-id"></span></p>
-            <div class="footer-nav">
-                <button id="home-nav-button-profile">Home</button>
-                <button id="profile-nav-button-profile" class="active">Profile</button>
-                <button id="feedback-nav-button-profile">Feedback</button>
-                <button id="notifications-nav-button-profile">Notifications</button> <!-- New Notifications Nav Button -->
-                <button id="heatmap-nav-button-profile">Wellbeing</button>
-                <button id="settings-nav-button-profile">Settings</button>
-            </div>
+            <button id="signupButton" class="button w-full mb-4">Sign Up</button>
+            <p>Already have an account? <a href="#" id="showLoginLink" class="link">Login</a></p>
         </div>
 
-        <div id="feedback-screen" class="hidden">
-            <h2 class="text-green-600">Feedback & Reviews</h2>
-            <p class="text-gray-700">Share your thoughts with us.</p>
-            <div class="star-rating" id="star-rating">
-                <i class="fas fa-star" data-value="1"></i>
-                <i class="fas fa-star" data-value="2"></i>
-                <i class="fas fa-star" data-value="3"></i>
-                <i class="fas fa-star" data-value="4"></i>
-                <i class="fas fa-star" data-value="5"></i>
+        <div id="chatScreen" class="screen">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-semibold">Your Chat</h2>
+                <button id="logoutButton" class="button button-small bg-gray-300 text-gray-800 px-4 py-2 rounded-full">Logout</button>
             </div>
-            <p class="text-sm text-gray-500 mt-2">Tap a star to rate our app!</p>
-            <div class="input-group mt-4">
-                <label for="feedback-input">Your Feedback:</label>
-                <textarea id="feedback-input" rows="4" placeholder="Type your feedback here..."></textarea>
-            </div>
-            <button id="submit-feedback-button" class="mt-4">Submit Feedback</button>
-            <p class="text-sm text-gray-500 mt-4">Vocal feedback is a planned feature for the full app!</p>
-            <div class="footer-nav">
-                <button id="home-nav-button-feedback">Home</button>
-                <button id="profile-nav-button-feedback">Profile</button>
-                <button id="feedback-nav-button-feedback" class="active">Feedback</button>
-                <button id="notifications-nav-button-feedback">Notifications</button> <!-- New Notifications Nav Button -->
-                <button id="heatmap-nav-button-feedback">Wellbeing</button>
-                <button id="settings-nav-button-feedback">Settings</button>
-            </div>
-        </div>
-
-        <div id="notifications-screen" class="hidden"> <!-- New Notifications Screen -->
-            <h2 class="text-green-600">Notifications</h2>
-            <p class="text-gray-700">Important updates and reminders.</p>
-            <div id="notifications-list" class="mt-4">
-                <!-- Dynamic notifications will be added here -->
-                <div class="notification-item">
-                    <strong>Welcome to RIHAYI!</strong>
-                    <span>Your journey to wellbeing starts now.</span>
-                    <span>Just now</span>
-                </div>
-                <div class="notification-item">
-                    <strong>Daily Check-in Reminder</strong>
-                    <span>How are you feeling today? Share your thoughts.</span>
-                    <span>2 hours ago</span>
-                </div>
-                <div class="notification-item">
-                    <strong>New Support Resources Available</strong>
-                    <span>Explore updated listings for legal aid in your region.</span>
-                    <span>Yesterday</span>
-                </div>
-                <div class="notification-item">
-                    <strong>Your Feedback Matters!</strong>
-                    <span>Thank you for your recent rating.</span>
-                    <span>3 days ago</span>
+            <div id="chatHistory" class="border border-gray-200 rounded-lg p-4 h-64 overflow-y-auto mb-4 bg-gray-50 text-left">
+                <div class="speech-bubble">
+                    <p>Welcome to RIHAYI! Start a conversation.</p>
+                    <span class="timestamp">Just now</span>
                 </div>
             </div>
-            <p class="text-sm text-gray-500 mt-4">This is a static list. In a full app, notifications would be dynamic.</p>
-            <div class="footer-nav">
-                <button id="home-nav-button-notifications">Home</button>
-                <button id="profile-nav-button-notifications">Profile</button>
-                <button id="feedback-nav-button-notifications">Feedback</button>
-                <button id="notifications-nav-button-notifications" class="active">Notifications</button>
-                <button id="heatmap-nav-button-notifications">Wellbeing</button>
-                <button id="settings-nav-button-notifications">Settings</button>
+            <div class="input-group flex items-center">
+                <input type="text" id="chatInput" placeholder="Type your message..." class="flex-grow mr-2">
+                <button id="sendChatButton" class="button px-4 py-2">Send</button>
             </div>
+             <button id="newConversationButton" class="button mt-4 w-full">Start New Conversation</button>
         </div>
 
+        <div id="aiScreen" class="screen">
+            <img src="https://via.placeholder.com/100" alt="AI Icon" class="mx-auto logo mb-4">
+            <h2 class="text-2xl font-semibold mb-4">Let's Translate!</h2>
+            <p class="mb-4">Click the microphone to start speaking. Click again to stop and translate.</p>
+            <button id="microphoneButton" class="button p-4 rounded-full text-4xl">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <p id="speechStatus" class="mt-4 text-gray-600">Click to start speaking...</p>
+            <div id="processingIndicator" class="hidden mt-4 text-orange-500 font-semibold">
+                Processing...
+            </div>
+            <div id="transcriptionDisplay" class="mt-4 p-3 bg-gray-100 rounded-lg text-left text-gray-800 min-h-[60px] max-h-[150px] overflow-y-auto border border-gray-200">
+                Your speech will appear here.
+            </div>
+            <div id="aiResponseDisplay" class="mt-4 p-3 bg-orange-50 rounded-lg text-left text-gray-800 min-h-[60px] max-h-[150px] overflow-y-auto border border-orange-200">
+                AI response will appear here.
+            </div>
+            <button id="processButton" class="button mt-6 w-full">Translate and Speak</button>
+            <button id="backToChatButton" class="button mt-4 w-full bg-gray-300 text-gray-800">Back to Chat</button>
 
-        <div id="heatmap-screen" class="hidden">
-            <h2 class="text-green-600">Emotional Wellbeing Heatmap</h2>
-            <p class="text-gray-700">This is a visual representation of your emotional wellbeing over time.</p>
-            <div class="heatmap-grid">
-                <!-- Static cells for demonstration -->
-                <div class="heatmap-cell mood-neutral">M</div>
-                <div class="heatmap-cell mood-low">T</div>
-                <div class="heatmap-cell mood-medium">W</div>
-                <div class="heatmap-cell mood-positive">Th</div>
-                <div class="heatmap-cell mood-high">F</div>
-                <div class="heatmap-cell mood-neutral">Sa</div>
-                <div class="heatmap-cell mood-low">Su</div>
-
-                <div class="heatmap-cell mood-positive"></div>
-                <div class="heatmap-cell mood-high"></div>
-                <div class="heatmap-cell mood-neutral"></div>
-                <div class="heatmap-cell mood-low"></div>
-                <div class="heatmap-cell mood-medium"></div>
-                <div class="heatmap-cell mood-positive"></div>
-                <div class="heatmap-cell mood-neutral"></div>
-
-                <div class="heatmap-cell mood-medium"></div>
-                <div class="heatmap-cell mood-low"></div>
-                <div class="heatmap-cell mood-high"></div>
-                <div class="heatmap-cell mood-positive"></div>
-                <div class="heatmap-cell mood-neutral"></div>
-                <div class="heatmap-cell mood-low"></div>
-                <div class="heatmap-cell mood-medium"></div>
-
-                <div class="heatmap-cell mood-high"></div>
-                <div class="heatmap-cell mood-positive"></div>
-                <div class="heatmap-cell mood-neutral"></div>
-                <div class="heatmap-cell mood-low"></div>
-                <div class="heatmap-cell mood-medium"></div>
-                <div class="heatmap-cell mood-positive"></div>
-                <div class="heatmap-cell mood-high"></div>
-            </div>
-            <div class="heatmap-legend">
-                <div class="legend-item"><span class="legend-color-box mood-low"></span> Low</div>
-                <div class="legend-item"><span class="legend-color-box mood-medium"></span> Medium</div>
-                <div class="legend-item"><span class="legend-color-box mood-neutral"></span> Neutral</div>
-                <div class="legend-item"><span class="legend-color-box mood-positive"></span> Positive</div>
-                <div class="legend-item"><span class="legend-color-box mood-high"></span> High</div>
-            </div>
-            <p class="text-sm text-gray-500 mt-4">This is a static representation. In a full app, this would show your real emotional trends.</p>
-            <div class="footer-nav">
-                <button id="home-nav-button-heatmap">Home</button>
-                <button id="profile-nav-button-heatmap">Profile</button>
-                <button id="feedback-nav-button-heatmap">Feedback</button>
-                <button id="notifications-nav-button-heatmap">Notifications</button> <!-- New Notifications Nav Button -->
-                <button id="heatmap-nav-button-heatmap" class="active">Wellbeing</button>
-                <button id="settings-nav-button-heatmap">Settings</button>
-            </div>
-        </div>
-
-        <div id="settings-screen" class="hidden">
-            <h2 class="text-green-600">Settings</h2>
-            <div class="input-group mt-4">
-                <label for="language-select">Preferred Language for Input/Output:</label>
-                <select id="language-select">
-                    <option value="en-US">English (US)</option>
-                    <option value="hi-IN">Hindi (India)</option>
-                    <option value="bn-IN">Bengali (India)</option>
-                    <option value="mr-IN">Marathi (India)</option>
-                    <option value="ta-IN">Tamil (India)</option>
-                    <option value="te-IN">Telugu (India)</option>
-                    <option value="kn-IN">Kannada (India)</option>
-                    <option value="ml-IN">Malayalam (India)</option>
-                    <option value="gu-IN">Gujarati (India)</option>
-                    <option value="pa-IN">Punjabi (India)</option>
-                    <option value="ur-IN">Urdu (India)</option>
-                    <!-- Common languages for migrants in India -->
-                    <option value="as-IN">Assamese (India)</option>
-                    <option value="or-IN">Oriya (India)</option>
-                    <option value="sa-IN">Sanskrit (India)</option>
-                    <option value="kok-IN">Konkani (India)</option>
-                    <option value="ne-NP">Nepali (Nepal - common in India)</option>
-                    <option value="my-MM">Burmese (Myanmar - common in India)</option>
-                    <!-- Other general languages -->
-                    <option value="es-ES">Spanish (Spain)</option>
-                    <option value="fr-FR">French (France)</option>
-                    <option value="de-DE">German (Germany)</option>
-                </select>
-            </div>
-
-            <div class="settings-option mt-4">
-                <span>Enable Daily Check-in Notifications</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="daily-notifications-toggle" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div class="settings-option">
-                <span>Larger Text Size</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="large-text-toggle">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div class="settings-option">
-                <span>About RIHAYI</span>
-                <button id="about-nav-button-settings" class="text-sm" style="background-color: transparent; color: #6b8e23; box-shadow: none;">View Info</button>
-            </div>
-            <div class="settings-option">
-                <span>Help & Support</span>
-                <button id="help-nav-button-settings" class="text-sm" style="background-color: transparent; color: #6b8e23; box-shadow: none;">Get Help</button>
-            </div>
-            <div class="settings-option mt-4">
-                <span>Clear All Local Data</span>
-                <button id="clear-data-button" class="text-sm" style="background-color: #e74c3c; color: white; box-shadow: none;">Reset App</button>
-            </div>
-
-            <p class="text-sm text-gray-500 mt-4">Changes apply immediately.</p>
-            <div class="footer-nav">
-                <button id="home-nav-button-settings">Home</button>
-                <button id="profile-nav-button-settings">Profile</button>
-                <button id="feedback-nav-button-settings">Feedback</button>
-                <button id="notifications-nav-button-settings">Notifications</button> <!-- New Notifications Nav Button -->
-                <button id="heatmap-nav-button-settings">Wellbeing</button>
-                <button id="settings-nav-button-settings" class="active">Settings</button>
-            </div>
-        </div>
-
-        <div id="about-screen" class="hidden">
-            <h2 class="text-green-600">About RIHAYI</h2>
-            <p class="text-gray-700 mt-4">
-                RIHAYI: Voice Unchained. Lives Reclaimed. is a dedicated platform designed to support migrant and vulnerable communities.
-                Our mission is to provide an accessible and empathetic space where individuals can express their feelings and find relevant support.
-            </p>
-            <p class="text-gray-700 mt-4">
-                We understand that navigating new environments can be challenging. RIHAYI aims to break down communication barriers by offering
-                multilingual voice and text input/output, ensuring everyone can connect and be heard in their preferred language.
-            </p>
-            <p class="text-gray-700 mt-4">
-                Our intelligent system helps identify emotions and issues, offering compassionate responses and connecting you with
-                dummy support networks like community centers, legal aid, and mental health services. We believe in empowering
-                individuals to reclaim their lives with dignity and hope.
-            </p>
-            <p class="text-sm text-gray-500 mt-4">
-                This is a prototype version. Full functionality, including real-time support data and persistent user profiles,
-                is under development.
-            </p>
-            <div class="footer-nav">
-                <button id="home-nav-button-about">Home</button>
-                <button id="profile-nav-button-about">Profile</button>
-                <button id="feedback-nav-button-about">Feedback</button>
-                <button id="notifications-nav-button-about">Notifications</button> <!-- New Notifications Nav Button -->
-                <button id="heatmap-nav-button-about">Wellbeing</button>
-                <button id="settings-nav-button-about">Settings</button>
+            <div id="statusMessage" class="status-message mt-4 active" role="alert">
+                <p id="statusText">System message or error will appear here.</p>
             </div>
         </div>
     </div>
 
-    <script type="module">
-        // Firebase imports (placeholders for future use, not fully implemented for this prototype)
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, doc, setDoc, addDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 
-        // Global variables for Canvas environment (MANDATORY TO USE within Canvas)
-        // If hosting this code outside of the Canvas environment (e.g., on GitHub Pages),
-        // you will need to manually provide your Firebase config and Gemini API key.
+    <script type="module">
+        // Global variables for Firebase (MANDATORY TO USE)
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-        // IMPORTANT: If hosting outside Canvas, replace "YOUR_GEMINI_API_KEY_HERE" with your actual API key.
-        // Get your API key from Google AI Studio: https://aistudio.google.com/app/apikey
-        const apiKey = "AIzaSyAG6Ska7Q1tzoSsX8w6E5wSAJlyqCHVQzY"; // If you are hosting this on GitHub, replace this with your actual API key.
-
-
         // Renamed db to firestoreDb and auth to firebaseAuth to avoid potential global conflicts
         let app, firestoreDb, firebaseAuth, userId;
 
-        // Initialize Firebase and Auth (minimal for prototype)
+        // Initialize Firebase if config is available
         if (Object.keys(firebaseConfig).length > 0) {
-            app = initializeApp(firebaseConfig);
-            firestoreDb = getFirestore(app); // Assigned to firestoreDb
-            firebaseAuth = getAuth(app);    // Assigned to firebaseAuth
+            app = firebase.initializeApp(firebaseConfig, appId);
+            firestoreDb = firebase.firestore(app);
+            firebaseAuth = firebase.auth(app);
 
-            // Sign in anonymously or with custom token
-            async function authenticateUser() {
-                try {
-                    if (initialAuthToken) {
-                        await signInWithCustomToken(firebaseAuth, initialAuthToken); // Using firebaseAuth
-                        console.log("Signed in with custom token.");
+            // Handle initial authentication token if provided
+            if (initialAuthToken) {
+                firebaseAuth.signInWithCustomToken(initialAuthToken)
+                    .then((userCredential) => {
+                        userId = userCredential.user.uid;
+                        console.log("Signed in with custom token. User ID:", userId);
+                        showScreen(chatScreen);
+                    })
+                    .catch((error) => {
+                        console.error("Error signing in with custom token:", error);
+                        displayStatusMessage(`Authentication error: ${error.message}`, "error");
+                        showScreen(loginScreen);
+                    });
+            } else {
+                // Monitor auth state changes for regular login/signup
+                firebaseAuth.onAuthStateChanged((user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("User is logged in:", userId);
+                        showScreen(chatScreen);
                     } else {
-                        await signInAnonymously(firebaseAuth); // Using firebaseAuth
-                        console.log("Signed in anonymously.");
+                        userId = null;
+                        console.log("No user is logged in.");
+                        // Only show login if intro has been seen
+                        if (localStorage.getItem('hasSeenIntro') === 'true') {
+                             showScreen(loginScreen);
+                        }
                     }
-                    userId = firebaseAuth.currentUser?.uid || crypto.randomUUID(); // Using firebaseAuth
-                    document.getElementById('display-user-id').textContent = userId;
-                    console.log("User ID:", userId);
-                } catch (error) {
-                    console.error("Firebase authentication error:", error);
-                    // Fallback to random UUID if auth fails
-                    userId = crypto.randomUUID();
-                    document.getElementById('display-user-id').textContent = userId + " (Auth Failed)";
-                }
+                });
             }
-            authenticateUser();
         } else {
-            console.warn("Firebase config not found. Running without Firebase features.");
-            userId = crypto.randomUUID(); // Fallback if no Firebase config
-            document.getElementById('display-user-id').textContent = userId + " (No Firebase)";
+            console.warn("Firebase configuration not provided. Firebase features will be disabled.");
+            displayStatusMessage("Firebase is not configured. Login/Signup and chat history will not function.", "warning");
+            // If Firebase is not configured, directly show AI screen for testing AI functionality
+            // showScreen(aiScreen); // Consider uncommenting for quick AI testing without auth
         }
 
+        // --- DOM Elements ---
+        const introScreen = document.getElementById('introScreen');
+        const loginScreen = document.getElementById('loginScreen');
+        const signupScreen = document.getElementById('signupScreen');
+        const chatScreen = document.getElementById('chatScreen');
+        const aiScreen = document.getElementById('aiScreen');
 
-        // --- UI Element References ---
-        const introScreen = document.getElementById('intro-screen');
-        const introSlide0 = document.getElementById('intro-slide-0'); // New: Language selection slide
-        const introSlide1 = document.getElementById('intro-slide-1');
-        const introSlide2 = document.getElementById('intro-slide-2');
-        const introSlide3 = document.getElementById('intro-slide-3');
-        const introNext0Button = document.getElementById('intro-next-0'); // New: Button for language slide
-        const introNext1Button = document.getElementById('intro-next-1');
-        const introNext2Button = document.getElementById('intro-next-2');
-        const introGetStartedButton = document.getElementById('intro-get-started');
-        const initialLanguageSelect = document.getElementById('initial-language-select'); // New: Language select on intro
+        const showSignupLink = document.getElementById('showSignupLink');
+        const showLoginLink = document.getElementById('showLoginLink');
 
+        const loginEmailInput = document.getElementById('loginEmail');
+        const loginPasswordInput = document.getElementById('loginPassword');
+        const loginButton = document.getElementById('loginButton');
 
-        const loginScreen = document.getElementById('login-screen');
-        const mainAppScreen = document.getElementById('main-app-screen');
-        const profileScreen = document.getElementById('profile-screen');
-        const feedbackScreen = document.getElementById('feedback-screen');
-        const notificationsScreen = document.getElementById('notifications-screen'); // New notifications screen
-        const heatmapScreen = document.getElementById('heatmap-screen');
-        const settingsScreen = document.getElementById('settings-screen');
-        const aboutScreen = document.getElementById('about-screen'); // New about screen
+        const signupEmailInput = document.getElementById('signupEmail');
+        const signupPasswordInput = document.getElementById('signupPassword');
+        const signupButton = document.getElementById('signupButton');
 
-        const loginButton = document.getElementById('login-button');
-        const registerButton = document.getElementById('register-button');
-        const processButton = document.getElementById('process-button');
-        const userInput = document.getElementById('user-input');
-        const emotionOutput = document.getElementById('emotion-output');
-        const issueOutput = document.getElementById('issue-output');
-        const responseOutput = document.getElementById('response-output');
-        const supportOutputContainer = document.getElementById('support-output-container');
-        const outputDisplay = document.getElementById('output-display');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const errorMessage = document.getElementById('error-message');
-        const microphoneButton = document.getElementById('microphone-button');
-        const speakResponseButton = document.getElementById('speak-response-button');
-        const languageSelect = document.getElementById('language-select'); // Language select on settings page
+        const logoutButton = document.getElementById('logoutButton');
+        const chatInput = document.getElementById('chatInput');
+        const sendChatButton = document.getElementById('sendChatButton');
+        const chatHistoryDiv = document.getElementById('chatHistory');
+        const newConversationButton = document.getElementById('newConversationButton');
 
-        // Profile screen elements
-        const saveProfileButton = document.getElementById('save-profile-button');
-        const profileName = document.getElementById('profile-name');
-        const profileAge = document.getElementById('profile-age');
-        const profileGender = document.getElementById('profile-gender');
-        const profileLocation = document.getElementById('profile-location');
-        const profileLastUpdated = document.getElementById('profile-last-updated'); // New timestamp element
+        const microphoneButton = document.getElementById('microphoneButton');
+        const speechStatus = document.getElementById('speechStatus');
+        const processingIndicator = document.getElementById('processingIndicator');
+        const transcriptionDisplay = document.getElementById('transcriptionDisplay');
+        const aiResponseDisplay = document.getElementById('aiResponseDisplay');
+        const processButton = document.getElementById('processButton');
+        const backToChatButton = document.getElementById('backToChatButton');
+        const statusMessageDiv = document.getElementById('statusMessage');
+        const statusTextP = document.getElementById('statusText');
 
-        // Feedback screen elements
-        const starRatingContainer = document.getElementById('star-rating');
-        const stars = starRatingContainer.querySelectorAll('.fa-star');
-        const submitFeedbackButton = document.getElementById('submit-feedback-button');
-        const feedbackInput = document.getElementById('feedback-input');
+        const introSlidesContainer = document.querySelector('.intro-slides');
+        const introSlides = document.querySelectorAll('.intro-slide');
+        const progressDotsContainer = document.querySelector('.progress-dots');
+        const nextIntroButton1 = document.getElementById('nextIntroButton1');
+        const nextIntroButton2 = document.getElementById('nextIntroButton2');
+        const nextIntroButton3 = document.getElementById('nextIntroButton3');
+        const nextIntroButton4 = document.getElementById('nextIntroButton4');
+        const inputLanguageSelect = document.getElementById('inputLanguage');
+        const outputLanguageSelect = document.getElementById('outputLanguage');
 
-        // Notifications screen elements
-        const notificationsList = document.getElementById('notifications-list'); // Get the notifications list container
+        let currentSlide = 0;
+        const totalSlides = introSlides.length;
 
-
-        // Settings screen elements
-        const dailyNotificationsToggle = document.getElementById('daily-notifications-toggle');
-        const largeTextToggle = document.getElementById('large-text-toggle');
-        const aboutNavButtonSettings = document.getElementById('about-nav-button-settings'); // Button to navigate to about screen
-        const helpNavButtonSettings = document.getElementById('help-nav-button-settings'); // New: Button to navigate to help screen
-        const clearDataButton = document.getElementById('clear-data-button'); // New: Clear data button
-
-
-        // Navigation buttons (main app screen)
-        const homeNavButton = document.getElementById('home-nav-button');
-        const profileNavButton = document.getElementById('profile-nav-button');
-        const feedbackNavButton = document.getElementById('feedback-nav-button');
-        const notificationsNavButton = document.getElementById('notifications-nav-button'); // New
-        const heatmapNavButton = document.getElementById('heatmap-nav-button');
-        const settingsNavButton = document.getElementById('settings-nav-button');
-
-        // Navigation buttons (profile screen)
-        const homeNavButtonProfile = document.getElementById('home-nav-button-profile');
-        const profileNavButtonProfile = document.getElementById('profile-nav-button-profile');
-        const feedbackNavButtonProfile = document.getElementById('feedback-nav-button-profile');
-        const notificationsNavButtonProfile = document.getElementById('notifications-nav-button-profile'); // New
-        const heatmapNavButtonProfile = document.getElementById('heatmap-nav-button-profile');
-        const settingsNavButtonProfile = document.getElementById('settings-nav-button-profile');
-
-        // Navigation buttons (feedback screen)
-        const homeNavButtonFeedback = document.getElementById('home-nav-button-feedback');
-        const profileNavButtonFeedback = document.getElementById('profile-nav-button-feedback');
-        const feedbackNavButtonFeedback = document.getElementById('feedback-nav-button-feedback');
-        const notificationsNavButtonFeedback = document.getElementById('notifications-nav-button-feedback'); // New
-        const heatmapNavButtonFeedback = document.getElementById('heatmap-nav-button-feedback');
-        const settingsNavButtonFeedback = document.getElementById('settings-nav-button-feedback');
-
-        // Navigation buttons (notifications screen)
-        const homeNavButtonNotifications = document.getElementById('home-nav-button-notifications'); // New
-        const profileNavButtonNotifications = document.getElementById('profile-nav-button-notifications'); // New
-        const feedbackNavButtonNotifications = document.getElementById('feedback-nav-button-notifications'); // New
-        const notificationsNavButtonNotifications = document.getElementById('notifications-nav-button-notifications'); // New
-        const heatmapNavButtonNotifications = document.getElementById('heatmap-nav-button-notifications'); // New
-        const settingsNavButtonNotifications = document.getElementById('settings-nav-button-notifications'); // New
-
-        // Navigation buttons (heatmap screen)
-        const homeNavButtonHeatmap = document.getElementById('home-nav-button-heatmap');
-        const profileNavButtonHeatmap = document.getElementById('profile-nav-button-heatmap');
-        const feedbackNavButtonHeatmap = document.getElementById('feedback-nav-button-heatmap');
-        const notificationsNavButtonHeatmap = document.getElementById('notifications-nav-button-heatmap'); // New
-        const heatmapNavButtonHeatmap = document.getElementById('heatmap-nav-button-heatmap');
-        const settingsNavButtonHeatmap = document.getElementById('settings-nav-button-heatmap');
-
-        // Navigation buttons (settings screen)
-        const homeNavButtonSettings = document.getElementById('home-nav-button-settings');
-        const profileNavButtonSettings = document.getElementById('profile-nav-button-settings');
-        const feedbackNavButtonSettings = document.getElementById('feedback-nav-button-settings');
-        const notificationsNavButtonSettings = document.getElementById('notifications-nav-button-settings'); // New
-        const heatmapNavButtonSettings = document.getElementById('heatmap-nav-button-settings');
-        const settingsNavButtonSettings = document.getElementById('settings-nav-button-settings');
-
-        // Navigation buttons (about screen)
-        const homeNavButtonAbout = document.getElementById('home-nav-button-about');
-        const profileNavButtonAbout = document.getElementById('profile-nav-button-about');
-        const feedbackNavButtonAbout = document.getElementById('feedback-nav-button-about');
-        const notificationsNavButtonAbout = document.getElementById('notifications-nav-button-about'); // New
-        const heatmapNavButtonAbout = document.getElementById('heatmap-nav-button-about');
-        const settingsNavButtonAbout = document.getElementById('settings-nav-button-about');
-
-
-        // --- Navigation Logic ---
-        function showScreen(screenToShow) {
-            const allScreens = [introScreen, loginScreen, mainAppScreen, profileScreen, feedbackScreen, notificationsScreen, heatmapScreen, settingsScreen, aboutScreen];
-            allScreens.forEach(screen => screen.classList.add('hidden'));
-            screenToShow.classList.remove('hidden');
-
-            // Update active state for navigation buttons
-            const allNavButtons = document.querySelectorAll('.footer-nav button');
-            allNavButtons.forEach(button => button.classList.remove('active'));
-            if (screenToShow === mainAppScreen) {
-                homeNavButton.classList.add('active');
-            } else if (screenToShow === profileScreen) {
-                profileNavButtonProfile.classList.add('active');
-                loadProfile(); // Load profile data when showing profile screen
-            } else if (screenToShow === feedbackScreen) {
-                feedbackNavButtonFeedback.classList.add('active');
-            } else if (screenToShow === notificationsScreen) { // New
-                notificationsNavButtonNotifications.classList.add('active');
-            } else if (screenToShow === heatmapScreen) {
-                heatmapNavButtonHeatmap.classList.add('active');
-            } else if (screenToShow === settingsScreen) {
-                settingsNavButtonSettings.classList.add('active');
-            } else if (screenToShow === aboutScreen) {
-                settingsNavButtonAbout.classList.add('active'); // About is conceptually under settings
-            }
+        // Populate progress dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('span');
+            dot.classList.add('dot');
+            dot.dataset.slide = i;
+            dot.addEventListener('click', () => showIntroSlide(i));
+            progressDotsContainer.appendChild(dot);
         }
-
-        // --- Intro/Walkthrough Logic ---
-        let currentIntroSlideIndex = 0; // Start at 0 for language selection
-        const introSlides = [introSlide0, introSlide1, introSlide2, introSlide3];
+        const progressDots = document.querySelectorAll('.dot');
 
         function showIntroSlide(index) {
-            introSlides.forEach((slide, i) => {
+            currentSlide = index;
+            introSlidesContainer.style.transform = `translateX(-${index * 100}%)`;
+            progressDots.forEach((dot, i) => {
                 if (i === index) {
-                    slide.classList.remove('hidden');
+                    dot.classList.add('active');
                 } else {
-                    slide.classList.add('hidden');
+                    dot.classList.remove('active');
                 }
             });
         }
 
-        introNext0Button.addEventListener('click', () => {
-            currentIntroSlideIndex = 1;
-            showIntroSlide(currentIntroSlideIndex);
-        });
-        introNext1Button.addEventListener('click', () => {
-            currentIntroSlideIndex = 2;
-            showIntroSlide(currentIntroSlideIndex);
-        });
-        introNext2Button.addEventListener('click', () => {
-            currentIntroSlideIndex = 3;
-            showIntroSlide(currentIntroSlideIndex);
-        });
-        introGetStartedButton.addEventListener('click', () => {
-            localStorage.setItem('hasSeenIntro', 'true');
-            showScreen(loginScreen);
-        });
-
-        // --- Login/Registration Logic ---
-        loginButton.addEventListener('click', () => {
-            // Simulate login success
-            showMessage("Login successful! Welcome back.", "info");
-            showScreen(mainAppScreen);
-        });
-
-        registerButton.addEventListener('click', () => {
-            // Simulate registration success
-            showMessage("Registration successful! You can now log in.", "info");
-            showScreen(mainAppScreen); // For prototype, directly go to main app
-        });
-
-        // --- Profile Screen Logic (Placeholder) ---
-        function loadProfile() {
-            const savedProfile = localStorage.getItem('profileData');
-            if (savedProfile) {
-                const profile = JSON.parse(savedProfile);
-                profileName.value = profile.name || '';
-                profileAge.value = profile.age || '';
-                profileGender.value = profile.gender || '';
-                profileLocation.value = profile.location || '';
-                profileLastUpdated.textContent = `Last Updated: ${profile.lastUpdated || 'Never'}`;
+        function nextIntroSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showIntroSlide(currentSlide + 1);
             } else {
-                profileName.value = '';
-                profileAge.value = '';
-                profileGender.value = '';
-                profileLocation.value = '';
-                profileLastUpdated.textContent = 'Last Updated: Never';
+                localStorage.setItem('hasSeenIntro', 'true');
+                showScreen(loginScreen);
             }
         }
 
-        saveProfileButton.addEventListener('click', () => {
-            const name = profileName.value;
-            const age = profileAge.value;
-            const gender = profileGender.value;
-            const location = profileLocation.value;
-            const lastUpdated = new Date().toLocaleString(); // Get current date/time
-
-            const profileData = { name, age, gender, location, lastUpdated };
-            localStorage.setItem('profileData', JSON.stringify(profileData));
-            console.log("Saving profile:", profileData);
-            showMessage("Profile saved (prototype only).", "info");
-            loadProfile(); // Immediately load to show persistence
-        });
-
-        // --- Feedback Screen Logic (Star Rating & Submission) ---
-        let userRating = 0; // To store the selected rating
-
-        stars.forEach(star => {
-            star.addEventListener('click', () => {
-                userRating = parseInt(star.dataset.value);
-                stars.forEach((s, i) => {
-                    if (i < userRating) {
-                        s.classList.add('checked');
-                    } else {
-                        s.classList.remove('checked');
-                    }
-                });
-                showMessage(`You rated us ${userRating} stars!`, "info");
-            });
-        });
-
-        submitFeedbackButton.addEventListener('click', () => {
-            const feedbackText = feedbackInput.value.trim();
-            if (userRating === 0 && !feedbackText) {
-                showMessage("Please provide a rating or some feedback before submitting.", "warning");
-                return;
-            }
-            console.log("Feedback submitted:", { rating: userRating, text: feedbackText });
-            showMessage("Thank you for your valuable feedback!", "info");
-            // Reset form
-            userRating = 0;
-            stars.forEach(s => s.classList.remove('checked'));
-            feedbackInput.value = '';
-        });
-
-        // --- Notifications Logic ---
-        function addUrgentNotification(emotion, issue) {
-            const notificationItem = document.createElement('div');
-            notificationItem.className = 'notification-item urgent';
-            notificationItem.innerHTML = `
-                <strong>Urgent: Support Needed!</strong>
-                <span>Your recent check-in indicated ${emotion} related to ${issue}. Please consider reaching out for immediate support.</span>
-                <span>${new Date().toLocaleTimeString()}</span>
-            `;
-            notificationsList.prepend(notificationItem); // Add to the top of the list
-            showMessage("Urgent notification added to your list!", "error"); // Use error type for urgency
-        }
-
-        // --- Settings Screen Logic (Placeholder) ---
-        dailyNotificationsToggle.addEventListener('change', () => {
-            const status = dailyNotificationsToggle.checked ? "enabled" : "disabled";
-            showMessage(`Daily notifications ${status} (prototype only).`, "info");
-        });
-
-        largeTextToggle.addEventListener('change', () => {
-            const status = largeTextToggle.checked ? "enabled" : "disabled";
-            // In a real app, you'd apply CSS class or change font size
-            document.body.style.fontSize = largeTextToggle.checked ? '1.15em' : '1em';
-            showMessage(`Larger text size ${status} (prototype only).`, "info");
-        });
-
-        aboutNavButtonSettings.addEventListener('click', () => showScreen(aboutScreen));
-        helpNavButtonSettings.addEventListener('click', () => showScreen(aboutScreen)); // "Get Help" navigates to About screen
-
-        clearDataButton.addEventListener('click', () => {
-            localStorage.clear();
-            showMessage("All local data cleared. App will reset on next load.", "info");
-            // Optional: reload page to show immediate effect
-            setTimeout(() => { location.reload(); }, 1500);
-        });
-
-
-        // Add event listeners for navigation buttons (repeated for clarity)
-        homeNavButton.addEventListener('click', () => showScreen(mainAppScreen));
-        profileNavButton.addEventListener('click', () => showScreen(profileScreen));
-        feedbackNavButton.addEventListener('click', () => showScreen(feedbackScreen));
-        notificationsNavButton.addEventListener('click', () => showScreen(notificationsScreen)); // New
-        heatmapNavButton.addEventListener('click', () => showScreen(heatmapScreen));
-        settingsNavButton.addEventListener('click', () => showScreen(settingsScreen));
-
-        homeNavButtonProfile.addEventListener('click', () => showScreen(mainAppScreen));
-        profileNavButtonProfile.addEventListener('click', () => showScreen(profileScreen));
-        feedbackNavButtonProfile.addEventListener('click', () => showScreen(feedbackScreen));
-        notificationsNavButtonProfile.addEventListener('click', () => showScreen(notificationsScreen)); // New
-        heatmapNavButtonProfile.addEventListener('click', () => showScreen(heatmapScreen));
-        settingsNavButtonProfile.addEventListener('click', () => showScreen(settingsScreen));
-
-        homeNavButtonFeedback.addEventListener('click', () => showScreen(mainAppScreen));
-        profileNavButtonFeedback.addEventListener('click', () => showScreen(profileScreen));
-        feedbackNavButtonFeedback.addEventListener('click', () => showScreen(feedbackScreen));
-        notificationsNavButtonFeedback.addEventListener('click', () => showScreen(notificationsScreen)); // New
-        heatmapNavButtonFeedback.addEventListener('click', () => showScreen(heatmapScreen));
-        settingsNavButtonFeedback.addEventListener('click', () => showScreen(settingsScreen));
-
-        homeNavButtonNotifications.addEventListener('click', () => showScreen(mainAppScreen)); // New
-        profileNavButtonNotifications.addEventListener('click', () => showScreen(profileScreen)); // New
-        feedbackNavButtonNotifications.addEventListener('click', () => showScreen(feedbackScreen)); // New
-        notificationsNavButtonNotifications.addEventListener('click', () => showScreen(notificationsScreen)); // New
-        heatmapNavButtonNotifications.addEventListener('click', () => showScreen(heatmapScreen)); // New
-        settingsNavButtonNotifications.addEventListener('click', () => showScreen(settingsScreen)); // New
-
-        homeNavButtonHeatmap.addEventListener('click', () => showScreen(mainAppScreen));
-        profileNavButtonHeatmap.addEventListener('click', () => showScreen(profileScreen));
-        feedbackNavButtonHeatmap.addEventListener('click', () => showScreen(feedbackScreen));
-        notificationsNavButtonHeatmap.addEventListener('click', () => showScreen(notificationsScreen)); // New
-        heatmapNavButtonHeatmap.addEventListener('click', () => showScreen(heatmap-screen));
-        settingsNavButtonHeatmap.addEventListener('click', () => showScreen(settingsScreen));
-
-        homeNavButtonSettings.addEventListener('click', () => showScreen(mainAppScreen));
-        profileNavButtonSettings.addEventListener('click', () => showScreen(profileScreen));
-        feedbackNavButtonSettings.addEventListener('click', () => showScreen(feedbackScreen));
-        notificationsNavButtonSettings.addEventListener('click', () => showScreen(notificationsScreen)); // New
-        heatmapNavButtonSettings.addEventListener('click', () => showScreen(heatmapScreen));
-        settingsNavButtonSettings.addEventListener('click', () => showScreen(settingsScreen));
-
-        homeNavButtonAbout.addEventListener('click', () => showScreen(mainAppScreen));
-        profileNavButtonAbout.addEventListener('click', () => showScreen(profileScreen));
-        feedbackNavButtonAbout.addEventListener('click', () => showScreen(feedbackScreen));
-        notificationsNavButtonAbout.addEventListener('click', () => showScreen(notificationsScreen)); // New
-        heatmapNavButtonAbout.addEventListener('click', () => showScreen(heatmapScreen));
-        settingsNavButtonAbout.addEventListener('click', () => showScreen(settingsScreen));
-
-
-        // --- Language Management ---
-        let currentLanguage = localStorage.getItem('preferredLanguage') || 'en-US';
-        languageSelect.value = currentLanguage; // Set settings page dropdown
-        initialLanguageSelect.value = currentLanguage; // Set initial intro dropdown
-
-        // Event listener for initial language selection
-        initialLanguageSelect.addEventListener('change', (event) => {
-            currentLanguage = event.target.value;
-            localStorage.setItem('preferredLanguage', currentLanguage);
-            if (recognition) {
-                recognition.lang = currentLanguage;
-            }
-            languageSelect.value = currentLanguage; // Sync settings dropdown
-            showMessage(`Language set to ${initialLanguageSelect.options[initialLanguageSelect.selectedIndex].text}.`, "info");
-        });
-
-        // Event listener for settings page language selection
-        languageSelect.addEventListener('change', (event) => {
-            currentLanguage = event.target.value;
-            localStorage.setItem('preferredLanguage', currentLanguage);
-            if (recognition) {
-                recognition.lang = currentLanguage;
-            }
-            initialLanguageSelect.value = currentLanguage; // Sync intro dropdown
-            showMessage(`Language set to ${languageSelect.options[languageSelect.selectedIndex].text}.`, "info");
-        });
-
-
-        // --- Speech Recognition (Voice Input) ---
-        let recognition;
-        let isRecording = false;
-
-        if ('webkitSpeechRecognition' in window) {
-            recognition = new webkitSpeechRecognition();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.lang = currentLanguage; // Set initial language
-
-            recognition.onstart = () => {
-                isRecording = true;
-                microphoneButton.classList.add('recording');
-                microphoneButton.innerHTML = '<i class="fas fa-stop"></i> Stop Recording';
-                showMessage("Listening... Speak now.", "info");
-            };
-
-            recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                userInput.value = transcript;
-                showMessage("Voice input received. Tap 'Process My Feelings'.", "info");
-            };
-
-            recognition.onerror = (event) => {
-                console.error('Speech recognition error:', event.error);
-                showMessage(`Voice input error: ${event.error}. Please try again.`, "error");
-                isRecording = false;
-                microphoneButton.classList.remove('recording');
-                microphoneButton.innerHTML = '<i class="fas fa-microphone"></i>';
-            };
-
-            recognition.onend = () => {
-                isRecording = false;
-                microphoneButton.classList.remove('recording');
-                microphoneButton.innerHTML = '<i class="fas fa-microphone"></i>';
-            };
-
-            microphoneButton.addEventListener('click', () => {
-                if (isRecording) {
-                    recognition.stop();
-                } else {
-                    recognition.start();
-                }
-            });
-        } else {
-            microphoneButton.style.display = 'none';
-            showMessage("Speech recognition not supported in this browser.", "warning");
-        }
-
-        // --- Speech Synthesis (Voice Output) ---
-        const synth = window.speechSynthesis;
-
-        speakResponseButton.addEventListener('click', () => {
-            const responseText = document.getElementById('response-output').textContent;
-            const supportTextElements = supportOutputContainer.querySelectorAll('.support-item');
-            let supportText = '';
-            supportTextElements.forEach(item => {
-                // Extract only the selected language text for speaking
-                const mainText = item.querySelector('strong').textContent + ' ' + item.childNodes[2].textContent.split('(')[0].trim(); // Name (Type)
-                const locationText = item.childNodes[4].textContent.replace('Location: ', '').trim();
-                const contactText = item.childNodes[6].textContent.replace('Contact: ', '').trim();
-                supportText += `${mainText}. Location: ${locationText}. Contact: ${contactText}. `;
-            });
-
-            const textToSpeak = responseText + ". " + supportText;
-
-            if (synth.speaking) {
-                synth.cancel(); // Stop current speech if any
-            }
-            const utterance = new SpeechSynthesisUtterance(textToSpeak);
-            utterance.lang = currentLanguage; // Use selected language for output
-            synth.speak(utterance);
-        });
-
-
-        // --- Core AI Processing Logic ---
-        processButton.addEventListener('click', async () => {
-            const prompt = userInput.value.trim();
-            if (!prompt) {
-                showMessage("Please enter your thoughts or concerns.", "warning");
-                return;
-            }
-
-            loadingSpinner.classList.add('show');
-            outputDisplay.classList.add('hidden');
-            errorMessage.classList.remove('show');
-            supportOutputContainer.innerHTML = ''; // Clear previous suggestions
-
-            try {
-                // Construct the prompt for the LLM with structured dual-language output and India-specific dummy data
-                const llmPrompt = `Analyze the following user input for emotion, primary issue, an empathetic response, and suggest 1-3 relevant support networks for migrants in India.
-                Provide the empathetic response and support network details in both the user's selected language and English.
-                For support networks, provide dummy but realistic-looking names, types, locations (Indian cities/states), and contact info.
-
-                User's selected language code: "${currentLanguage}"
-
-                User Input: "${prompt}"
-
-                Provide the output in a structured JSON format with the following keys:
-                "emotion": (e.g., "Sadness", "Anger", "Anxiety", "Hope", "Neutral" - English only)
-                "issue": (e.g., "Job Loss", "Loneliness", "Discrimination", "Financial Hardship", "Health Concern", "Legal Issue", "Family Conflict", "Housing")
-                "empathetic_response": {
-                    "selected_language": "Empathetic response in the user's selected language.",
-                    "english": "Empathetic response in English."
-                },
-                "support_suggestions": [
-                    {
-                        "name": "Name of Organization (English)",
-                        "type": "Type of Support (English)",
-                        "location": "City/State, India (English)",
-                        "contact": "Dummy Contact Info (e.g., +91-XXXXXXXXXX, help@example.org)",
-                        "name_selected_language": "Name of Organization in selected language",
-                        "type_selected_language": "Type of Support in selected language",
-                        "location_selected_language": "City/State, India in selected language"
-                    }
-                ]
-                `;
-
-                let chatHistory = [];
-                chatHistory.push({ role: "user", parts: [{ text: llmPrompt }] });
-
-                const payload = {
-                    contents: chatHistory,
-                    generationConfig: {
-                        responseMimeType: "application/json",
-                        responseSchema: {
-                            type: "OBJECT",
-                            properties: {
-                                "emotion": { "type": "STRING" },
-                                "issue": { "type": "STRING" },
-                                "empathetic_response": {
-                                    "type": "OBJECT",
-                                    "properties": {
-                                        "selected_language": { "type": "STRING" },
-                                        "english": { "type": "STRING" }
-                                    }
-                                },
-                                "support_suggestions": {
-                                    "type": "ARRAY",
-                                    "items": {
-                                        type: "OBJECT",
-                                        properties: {
-                                            "name": { "type": "STRING" },
-                                            "type": { "type": "STRING" },
-                                            "location": { "type": "STRING" },
-                                            "contact": { "type": "STRING" },
-                                            "name_selected_language": { "type": "STRING" },
-                                            "type_selected_language": { "type": "STRING" },
-                                            "location_selected_language": { "type": "STRING" }
-                                        },
-                                        "propertyOrdering": ["name", "type", "location", "contact", "name_selected_language", "type_selected_language", "location_selected_language"]
-                                    }
-                                }
-                            },
-                            "propertyOrdering": ["emotion", "issue", "empathetic_response", "support_suggestions"]
-                        }
-                    }
-                };
-
-                // Use the defined apiKey variable
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                // Check for HTTP errors (e.g., 400, 500 status codes)
-                if (!response.ok) {
-                    const errorBody = await response.text(); // Get the raw error body
-                    console.error(`HTTP error! Status: ${response.status}, Body: ${errorBody}`);
-                    showMessage(`Network or API error: ${response.status}. Please try again later.`, "error");
-                    return;
-                }
-
-                const result = await response.json();
-                console.log("Raw AI response result:", result); // Log the full result for debugging
-
-                // --- Start of enhanced AI response handling ---
-                if (result.promptFeedback && result.promptFeedback.blockReason) {
-                    const blockReason = result.promptFeedback.blockReason;
-                    showMessage(`AI response was blocked due to safety concerns: ${blockReason}. Please try rephrasing your input.`, "error");
-                    console.warn("AI response blocked:", result.promptFeedback);
-                    return;
-                }
-
-                // Check if candidates array exists and has at least one element
-                if (!result.candidates || result.candidates.length === 0) {
-                    showMessage("The AI did not return any candidates. This might be a temporary issue. Please try again.", "error");
-                    console.error("AI response: No candidates found.", result);
-                    return;
-                }
-
-                const firstCandidate = result.candidates[0];
-
-                // Check if content and parts exist within the first candidate
-                if (!firstCandidate.content || !firstCandidate.content.parts || firstCandidate.content.parts.length === 0) {
-                    showMessage("The AI response was empty or malformed. Please try again.", "error");
-                    console.error("AI response: Content or parts missing from first candidate.", firstCandidate);
-                    return;
-                }
-
-                const responsePart = firstCandidate.content.parts[0];
-
-                // Check if the text property exists in the first part
-                if (!responsePart.text) {
-                    showMessage("The AI response did not contain the expected text. Please try again.", "error");
-                    console.error("AI response: Text property missing from first part.", responsePart);
-                    return;
-                }
-
-                let parsedData;
-                try {
-                    const jsonString = responsePart.text;
-                    parsedData = JSON.parse(jsonString);
-                } catch (jsonError) {
-                    showMessage("The AI returned data that could not be understood (JSON parse error). Please try again with a different input.", "error");
-                    console.error("Error parsing AI response JSON:", jsonError, "Raw AI response text:", responsePart.text);
-                    return;
-                }
-
-                // If we reach here, parsedData is a valid JSON object
-                emotionOutput.textContent = parsedData.emotion || 'N/A';
-                issueOutput.textContent = parsedData.issue || 'N/A';
-
-                // Display empathetic response in both languages
-                responseOutput.innerHTML = `
-                    ${parsedData.empathetic_response?.selected_language || 'Could not generate response in selected language.'}
-                    <div class="language-output">(${parsedData.empathetic_response?.english || 'Could not generate English response.'})</div>
-                `;
-
-                // Display structured support suggestions in both languages
-                if (parsedData.support_suggestions && parsedData.support_suggestions.length > 0) {
-                    supportOutputContainer.innerHTML = ''; // Clear previous suggestions before adding new ones
-                    parsedData.support_suggestions.forEach(suggestion => {
-                        const div = document.createElement('div');
-                        div.className = 'support-item';
-                        div.innerHTML = `
-                            <strong>${suggestion.name_selected_language || suggestion.name || 'N/A'}</strong> (${suggestion.type_selected_language || suggestion.type || 'N/A'})<br>
-                            Location: ${suggestion.location_selected_language || suggestion.location || 'N/A'}<br>
-                            Contact: ${suggestion.contact || 'N/A'}
-                            <div class="language-output">
-                                (English: <strong>${suggestion.name || 'N/A'}</strong> (${suggestion.type || 'N/A'}), Location: ${suggestion.location || 'N/A'})
-                            </div>
-                        `;
-                        supportOutputContainer.appendChild(div);
-                    });
-                } else {
-                    supportOutputContainer.textContent = 'No specific suggestions.';
-                }
-
-                outputDisplay.classList.remove('hidden');
-                speakResponseButton.classList.remove('hidden'); // Show speak button
-
-                // --- Save data to Firestore and check for urgent notification ---
-                if (firestoreDb && userId) { // Using firestoreDb
-                    const wellbeingEntry = {
-                        userId: userId,
-                        timestamp: new Date().toISOString(), // ISO string for consistent date format
-                        userInput: prompt,
-                        emotion: parsedData.emotion,
-                        issue: parsedData.issue,
-                        empathetic_response: parsedData.empathetic_response,
-                        support_suggestions: parsedData.support_suggestions,
-                        language: currentLanguage
-                    };
-                    try {
-                        await addDoc(collection(firestoreDb, `artifacts/${appId}/users/${userId}/wellbeing_entries`), wellbeingEntry); // Using firestoreDb
-                        console.log("Wellbeing data saved to Firestore:", wellbeingEntry);
-
-                        // Check for worsening wellbeing to trigger notification
-                        const negativeEmotions = ["Sadness", "Anger", "Anxiety", "Distress", "Despair", "Fear", "Grief", "Frustration", "Hopelessness"];
-                        if (negativeEmotions.includes(parsedData.emotion)) {
-                            addUrgentNotification(parsedData.emotion, parsedData.issue);
-                        }
-
-                    } catch (firestoreError) {
-                        console.error("Error saving wellbeing data to Firestore:", firestoreError);
-                        showMessage("Could not save wellbeing data (prototype only).", "error");
-                    }
-                } else {
-                    console.warn("Firestore not initialized or userId not available. Data not saved.");
-                }
-
-
-            } catch (error) {
-                // Catch any other unexpected errors during the fetch or processing
-                showMessage(`An unexpected error occurred: ${error.message}. Please try again.`, "error");
-                console.error("Overall error processing input:", error);
-            } finally {
-                loadingSpinner.classList.remove('show');
-            }
-        });
-
-        // --- Message Box Function ---
-        function showMessage(message, type = "info") {
-            errorMessage.textContent = message;
-            errorMessage.classList.add('show');
-            errorMessage.classList.remove('error', 'warning', 'info'); // Clear previous types
-            errorMessage.classList.add(type); // Add current type
-
-            // Set specific styles based on type
+        function displayStatusMessage(message, type = "info") {
+            statusTextP.textContent = message;
+            statusMessageDiv.classList.remove("error", "warning", "info");
+            statusMessageDiv.classList.add(type, "active");
+
+            // Style based on type
+            const errorMessage = document.getElementById('statusMessage');
             if (type === "error") {
                 errorMessage.style.backgroundColor = "#ffc2c2";
                 errorMessage.style.color = "#990000";
@@ -1563,6 +460,334 @@
             }
         }
 
+
+        // --- Screen Switching Functionality ---
+        function showScreen(screenToShow) {
+            const screens = [introScreen, loginScreen, signupScreen, chatScreen, aiScreen];
+            screens.forEach(screen => {
+                if (screen === screenToShow) {
+                    screen.classList.add('active');
+                } else {
+                    screen.classList.remove('active');
+                }
+            });
+            // Clear status message when changing screens
+            displayStatusMessage("", "info");
+            statusMessageDiv.classList.remove("active");
+        }
+
+        // --- Event Listeners for Screen Navigation ---
+        showSignupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showScreen(signupScreen);
+        });
+
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showScreen(loginScreen);
+        });
+
+        if (nextIntroButton1) nextIntroButton1.addEventListener('click', nextIntroSlide);
+        if (nextIntroButton2) nextIntroButton2.addEventListener('click', nextIntroSlide);
+        if (nextIntroButton3) nextIntroButton3.addEventListener('click', nextIntroSlide);
+        if (nextIntroButton4) nextIntroButton4.addEventListener('click', nextIntroSlide);
+
+        // --- Firebase Authentication ---
+        if (firebaseAuth) {
+            loginButton.addEventListener('click', async () => {
+                const email = loginEmailInput.value;
+                const password = loginPasswordInput.value;
+                try {
+                    await firebaseAuth.signInWithEmailAndPassword(email, password);
+                    displayStatusMessage("Logged in successfully!", "info");
+                    // Auth state change listener will handle screen transition
+                } catch (error) {
+                    console.error("Login error:", error);
+                    displayStatusMessage(`Login failed: ${error.message}`, "error");
+                }
+            });
+
+            signupButton.addEventListener('click', async () => {
+                const email = signupEmailInput.value;
+                const password = signupPasswordInput.value;
+                try {
+                    await firebaseAuth.createUserWithEmailAndPassword(email, password);
+                    displayStatusMessage("Account created successfully!", "info");
+                    // Auth state change listener will handle screen transition
+                } catch (error) {
+                    console.error("Signup error:", error);
+                    displayStatusMessage(`Signup failed: ${error.message}`, "error");
+                }
+            });
+
+            logoutButton.addEventListener('click', async () => {
+                try {
+                    await firebaseAuth.signOut();
+                    displayStatusMessage("Logged out successfully!", "info");
+                    // Auth state change listener will handle screen transition
+                } catch (error) {
+                    console.error("Logout error:", error);
+                    displayStatusMessage(`Logout failed: ${error.message}`, "error");
+                }
+            });
+        }
+
+        // --- Chat History (Firestore) ---
+        let currentConversationId = null; // To manage active conversation
+        let unsubscribeFromChat = null; // To store the unsubscribe function for real-time updates
+
+        function loadChatHistory() {
+            if (!firestoreDb || !userId) return;
+
+            // Try to load a "default" conversation for the user, or create one if none exists
+            // For a real app, you'd manage multiple conversations or use more sophisticated IDs
+            const userChatRef = firestoreDb.collection('chats').doc(userId);
+
+            // Unsubscribe from previous listener if exists
+            if (unsubscribeFromChat) {
+                unsubscribeFromChat();
+            }
+
+            unsubscribeFromChat = userChatRef.collection('messages')
+                .orderBy('timestamp')
+                .onSnapshot(snapshot => {
+                    chatHistoryDiv.innerHTML = ''; // Clear existing messages
+                    snapshot.forEach(doc => {
+                        const message = doc.data();
+                        addMessageToChat(message.text, message.sender === userId ? 'user' : 'ai', message.timestamp);
+                    });
+                }, error => {
+                    console.error("Error loading chat history:", error);
+                    displayStatusMessage("Error loading chat history.", "error");
+                });
+
+            // Set currentConversationId based on user ID for simplicity
+            currentConversationId = userId;
+        }
+
+        function addMessageToChat(text, senderType, timestamp) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('speech-bubble', senderType === 'user' ? 'bg-blue-100' : 'bg-gray-100', 'mb-2'); // Tailwind classes
+            messageElement.innerHTML = `
+                <p>${text}</p>
+                <span class="timestamp">${timestamp ? new Date(timestamp.toDate()).toLocaleTimeString() : 'Sending...'}</span>
+            `;
+            chatHistoryDiv.appendChild(messageElement);
+            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight; // Scroll to bottom
+        }
+
+        if (sendChatButton) {
+            sendChatButton.addEventListener('click', async () => {
+                const messageText = chatInput.value.trim();
+                if (messageText && firestoreDb && userId && currentConversationId) {
+                    chatInput.value = ''; // Clear input
+
+                    // Add user message to UI immediately
+                    addMessageToChat(messageText, 'user');
+
+                    try {
+                        const chatDocRef = firestoreDb.collection('chats').doc(currentConversationId);
+                        const messagesCollectionRef = chatDocRef.collection('messages');
+
+                        await messagesCollectionRef.add({
+                            text: messageText,
+                            sender: userId,
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                        console.log("Message sent to Firestore:", messageText);
+
+                        // If you want to integrate this chat directly with AI, call your AI function here
+                        // For example: await sendToGeminiAPI(messageText);
+
+                    } catch (error) {
+                        console.error("Error sending message to Firestore:", error);
+                        displayStatusMessage("Failed to send message.", "error");
+                    }
+                }
+            });
+        }
+
+        if (newConversationButton) {
+            newConversationButton.addEventListener('click', () => {
+                // For simplicity, just clear UI. For real app, you'd generate a new conversation ID
+                chatHistoryDiv.innerHTML = `
+                    <div class="speech-bubble">
+                        <p>Starting a new conversation. Welcome!</p>
+                        <span class="timestamp">Just now</span>
+                    </div>
+                `;
+                displayStatusMessage("Started a new conversation.", "info");
+                // If you have a backend, this would trigger creation of a new session/conversation ID
+            });
+        }
+
+        // When chat screen is activated, load history
+        document.addEventListener('screenChange', (e) => {
+            if (e.detail.screenId === 'chatScreen' && userId) {
+                loadChatHistory();
+            }
+        });
+
+
+        // --- Speech Recognition ---
+        let recognition;
+        let isRecording = false;
+
+        // Check for Web Speech API support
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false; // Set to true for continuous recognition
+            recognition.interimResults = true; // Set to true for interim results
+            recognition.lang = inputLanguageSelect.value; // Default language
+
+            recognition.onstart = () => {
+                isRecording = true;
+                speechStatus.textContent = "Listening...";
+                microphoneButton.classList.add('animate-pulse', 'text-red-500'); // Visual cue for recording
+                transcriptionDisplay.textContent = 'Speak now...';
+                displayStatusMessage("Recording started...", "info");
+            };
+
+            recognition.onresult = (event) => {
+                let interimTranscript = '';
+                let finalTranscript = '';
+
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    const transcript = event.results[i][0].transcript;
+                    if (event.results[i].isFinal) {
+                        finalTranscript += transcript;
+                    } else {
+                        interimTranscript += transcript;
+                    }
+                }
+                transcriptionDisplay.textContent = finalTranscript || interimTranscript;
+            };
+
+            recognition.onerror = (event) => {
+                isRecording = false;
+                speechStatus.textContent = "Error during speech recognition.";
+                microphoneButton.classList.remove('animate-pulse', 'text-red-500');
+                console.error("Speech recognition error:", event.error);
+                displayStatusMessage(`Speech recognition error: ${event.error}`, "error");
+            };
+
+            recognition.onend = () => {
+                isRecording = false;
+                speechStatus.textContent = "Click to start speaking...";
+                microphoneButton.classList.remove('animate-pulse', 'text-red-500');
+                displayStatusMessage("Recording ended.", "info");
+                // Automatically trigger processing when recording stops (if final transcript exists)
+                if (transcriptionDisplay.textContent.trim() !== '' && transcriptionDisplay.textContent.trim() !== 'Speak now...') {
+                    processButton.click();
+                }
+            };
+
+            // Update language setting when select box changes
+            inputLanguageSelect.addEventListener('change', () => {
+                recognition.lang = inputLanguageSelect.value;
+                displayStatusMessage(`Input language set to: ${inputLanguageSelect.options[inputLanguageSelect.selectedIndex].text}`, "info");
+            });
+
+            microphoneButton.addEventListener('click', () => {
+                if (isRecording) {
+                    recognition.stop();
+                } else {
+                    recognition.start();
+                }
+            });
+
+        } else {
+            speechStatus.textContent = "Speech Recognition not supported in this browser.";
+            microphoneButton.disabled = true;
+            displayStatusMessage("Speech Recognition is not supported by your browser. Please use Chrome or Edge.", "warning");
+        }
+
+
+        // --- Core AI Processing Logic ---
+        processButton.addEventListener('click', async () => {
+            const userText = transcriptionDisplay.textContent.trim();
+            const selectedOutputLanguage = outputLanguageSelect.value;
+
+            if (userText === '' || userText === 'Speak now...' || userText === 'Your speech will appear here.') {
+                displayStatusMessage("Please speak something first!", "warning");
+                return;
+            }
+
+            processingIndicator.classList.remove('hidden');
+            aiResponseDisplay.textContent = 'Thinking...';
+            displayStatusMessage("Translating...", "info");
+
+            try {
+                // ** IMPORTANT: Replace "YOUR_GENERATED_GOOGLE_API_KEY_HERE" with your actual Gemini API Key **
+                const apiKey = "AIzaSyAG6Ska7Q1tzoSsX8w6E5wSAJlyqCHVQzY"; // Get your API key from Google AI Studio: https://aistudio.google.com/
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const llmPrompt = `Translate the following text into ${selectedOutputLanguage} and provide only the translated text. Do not include any additional commentary or formatting. If the input text is empty or unclear, respond with "I didn't catch that. Could you please repeat?"
+
+                User text: "${userText}"`;
+
+                const payload = {
+                    contents: [{
+                        parts: [{
+                            text: llmPrompt
+                        }]
+                    }]
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorBody = await response.text(); // Read as text to get full error message
+                    console.error("API Response Error Body:", errorBody); // Log the raw error body
+                    throw new Error(`API error: ${response.status} ${response.statusText}. Details: ${errorBody.substring(0, 200)}...`);
+                }
+
+                // Try to parse JSON, if it fails, it's a JSON parse error
+                const data = await response.json();
+                console.log("Gemini API Response:", data);
+
+                let translatedText = "No translation found.";
+                if (data && data.candidates && data.candidates.length > 0 && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts.length > 0) {
+                    translatedText = data.candidates[0].content.parts[0].text;
+                } else if (data && data.promptFeedback && data.promptFeedback.blockReason) {
+                    translatedText = `Content blocked due to safety reasons: ${data.promptFeedback.blockReason}`;
+                    displayStatusMessage(translatedText, "warning");
+                } else {
+                    translatedText = "Could not parse AI response or no translation generated.";
+                    displayStatusMessage(translatedText, "warning");
+                }
+
+                aiResponseDisplay.textContent = translatedText;
+                displayStatusMessage("Translation complete!", "info");
+
+                // Text-to-Speech for the translated text
+                if ('speechSynthesis' in window) {
+                    const synth = window.speechSynthesis;
+                    const utterance = new SpeechSynthesisUtterance(translatedText);
+                    utterance.lang = selectedOutputLanguage; // Set speech language to output language
+                    synth.speak(utterance);
+                    displayStatusMessage("Speaking translation...", "info");
+                } else {
+                    displayStatusMessage("Text-to-Speech not supported in this browser.", "warning");
+                }
+
+            } catch (error) {
+                console.error("AI processing error:", error);
+                aiResponseDisplay.textContent = "Error: Could not translate.";
+                displayStatusMessage(`Error: ${error.message || 'An unknown error occurred.'}`, "error");
+            } finally {
+                processingIndicator.classList.add('hidden');
+            }
+        });
+
+        backToChatButton.addEventListener('click', () => {
+            showScreen(chatScreen);
+        });
+
         // Initial screen display based on whether user has seen intro
         window.onload = () => {
             if (localStorage.getItem('hasSeenIntro') === 'true') {
@@ -1573,5 +798,16 @@
             }
         };
     </script>
+       if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      })
+      .catch(err => {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+  });
+}
 </body>
 </html>

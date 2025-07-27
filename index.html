@@ -1406,35 +1406,58 @@
                     body: JSON.stringify(payload)
                 });
 
+                // Check for HTTP errors (e.g., 400, 500 status codes)
+                if (!response.ok) {
+                    const errorBody = await response.text(); // Get the raw error body
+                    console.error(`HTTP error! Status: ${response.status}, Body: ${errorBody}`);
+                    showMessage(`Network or API error: ${response.status}. Please try again later.`, "error");
+                    return;
+                }
+
                 const result = await response.json();
+                console.log("Raw AI response result:", result); // Log the full result for debugging
 
                 // --- Start of enhanced AI response handling ---
                 if (result.promptFeedback && result.promptFeedback.blockReason) {
-                    // AI response was blocked by safety filters
                     const blockReason = result.promptFeedback.blockReason;
                     showMessage(`AI response was blocked due to safety concerns: ${blockReason}. Please try rephrasing your input.`, "error");
                     console.warn("AI response blocked:", result.promptFeedback);
-                    return; // Stop further processing
+                    return;
                 }
 
-                if (!result.candidates || result.candidates.length === 0 ||
-                    !result.candidates[0].content || !result.candidates[0].content.parts ||
-                    result.candidates[0].content.parts.length === 0) {
-                    // AI response is empty or malformed in its basic structure
-                    showMessage("Could not get a valid response from the AI. The AI might be busy or the response structure was unexpected. Please try again.", "error");
-                    console.error("Unexpected AI response structure or empty candidates:", result);
-                    return; // Stop further processing
+                // Check if candidates array exists and has at least one element
+                if (!result.candidates || result.candidates.length === 0) {
+                    showMessage("The AI did not return any candidates. This might be a temporary issue. Please try again.", "error");
+                    console.error("AI response: No candidates found.", result);
+                    return;
+                }
+
+                const firstCandidate = result.candidates[0];
+
+                // Check if content and parts exist within the first candidate
+                if (!firstCandidate.content || !firstCandidate.content.parts || firstCandidate.content.parts.length === 0) {
+                    showMessage("The AI response was empty or malformed. Please try again.", "error");
+                    console.error("AI response: Content or parts missing from first candidate.", firstCandidate);
+                    return;
+                }
+
+                const responsePart = firstCandidate.content.parts[0];
+
+                // Check if the text property exists in the first part
+                if (!responsePart.text) {
+                    showMessage("The AI response did not contain the expected text. Please try again.", "error");
+                    console.error("AI response: Text property missing from first part.", responsePart);
+                    return;
                 }
 
                 let parsedData;
                 try {
-                    const jsonString = result.candidates[0].content.parts[0].text;
+                    const jsonString = responsePart.text;
                     parsedData = JSON.parse(jsonString);
                 } catch (jsonError) {
-                    // AI response was not valid JSON
-                    showMessage("The AI returned data that could not be understood. Please try again with a different input.", "error");
-                    console.error("Error parsing AI response JSON:", jsonError, "Raw AI response:", result.candidates[0].content.parts[0].text);
-                    return; // Stop further processing
+                    showMessage("The AI returned data that could not be understood (JSON parse error). Please try again with a different input.", "error");
+                    console.error("Error parsing AI response JSON:", jsonError, "Raw AI response text:", responsePart.text);
+                    return;
                 }
 
                 // If we reach here, parsedData is a valid JSON object
